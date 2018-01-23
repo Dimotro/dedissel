@@ -85,6 +85,10 @@ class UserController extends Controller
     {
         $klant = $this->getDoctrine()->getRepository(Klantaccount::class)->find($user);
         $details = $klant->getKlantPersoonlijkeGegevens();
+        if( !$details ){
+            $details = new Klantgegeven();
+            $klant->setKlantPersoonlijkeGegevens($details);
+        }
         $adres = $details->getKlantNAW();
         $detailsForm  = $this->createForm( DetailsType::class, $details, array(
             'attr' => array(
@@ -93,6 +97,7 @@ class UserController extends Controller
         ));
         if (!$adres){
             $adres = new Klantadres();
+            $details->setKlantNAW($adres);
         }
         $adresForm = $this->createForm( AdresType::class, $adres);
         $detailsForm->handleRequest($request);
