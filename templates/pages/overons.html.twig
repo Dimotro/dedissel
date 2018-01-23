@@ -1,34 +1,24 @@
 {% extends 'base.html.twig' %}
 {% block body %}
     {% include 'partials/header.html.twig' %}
-
     <div id="overons">
+        <img src="{{ asset('images/pexels-photo-237018.jpeg') }}" class="header-foto2" alt="">
         <div class="overons-box container">
             <div class="block col-md-12 overons">
-              <div class="overons-box content">
-                 <h2>Over de Dissel</h2> </br>
-                  <p> Wilt u een camper of caravan huren bij de Dissel?</br></br>
-
-                    Wij zijn zeer ervaren, betrouwbaar en voordelig. Daarbij zijn al onze campers kilometervrij!</br></br>
-
-                    U heeft bij de Dissel een ruime keuze uit maar liefst 70 huurcampers tegen all-in prijzen.</br>
-                    Daarnaast bieden wij ook 24 uurservice. Een camper huurt u al vanaf 65 euro per dag.</br></br>
-                     Bekijk snel de camper en caravan mogelijkheden op onze pagina Huidig aanbod.</p></br></br>
-              </div>
+                <div class="overons-box content">
+                    <h2>Over de Dissel</h2><br>
+                    <p>
+                        Wilt u een camper of caravan huren bij de Dissel?<br><br>
+                        Wij van de Dissel leggen ons toe op de verhuur van jonge campers en caravans.<br>
+                        De laatste jaren ontdekken steeds meer kampeerders het genot van een luxe camper of caravan.<br>
+                        Indien u overweegt een camper of caravan aan te schaffen, kunt u door eerst een aantal verschillende campers en caravans te huren, ervaren wat het beste bij u past.<br>
+                        De Dissel kan u hier perfect bij helpen.<br><br>
+                        Bij de Dissel kunt u ook vele opties bijhuren, om uw vakantie beleving nog completer te maken!<br>
+                        Dus kom snel kijken bij ons huidig aanbod, kijk wat bij u past, huur en geniet!
+                    </p>
+                </div>
             </div>
         </div>
-
-
-        <div class="overons-box1">
-             <div class="block col-md-6 overonsfoto"></div>
-                <img src="{{ asset('images/overons0.png') }}">
-             </div>
-
-            <div class="overons-box2">
-                <img src="{{ asset('images/overons1.png ') }}">
-            </div>
-        </div>
-
     </div>
     {% include 'partials/footer.html.twig' %}
 {% endblock %}
