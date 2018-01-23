@@ -1,0 +1,33 @@
+{% extends '/base.html.twig' %}
+{% block body %}
+    {% include '/partials/header.html.twig' %}
+    <div id="content">
+        <div class="content-box container">
+            <div class="row">
+                <h3 class="col-md-6" style="font-family: europa;">Optie toevoegen</h3>
+                <div class="col-md-6" style="display: flex; justify-content: flex-end; align-items: center; height: 80px;">
+                    <a href="{{ path('admin_overview_option') }}">
+                        <div class="btn btn-primary">
+                            <i class="fas fa-reply"></i> Terug
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div style="padding: 30px;">
+                {{ form_start(form) }}
+                <div class="form-group">
+                    {{ form_row(form.optieTitel, {'label': 'Naam','attr': { 'class': 'form-control' }}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.optieOmschrijving, {'label': 'Omschrijving','attr': { 'class': 'form-control' }}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.optiePrijs, {'label': 'Prijs','attr': { 'class': 'form-control' }}) }}
+                </div>
+                <input type="submit" value="Toevoegen" class="btn btn-primary">
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+    {% include '/partials/footer.html.twig' %}
+{% endblock %}

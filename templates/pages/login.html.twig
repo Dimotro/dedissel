@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+{% include 'partials/header.html.twig' %}
+<div id="content">
+    <div class="content-box container">
+        <!-- Laat errors zien als deze aanwezig zijn -->
+        <form action="{{ path('login_page') }}" method="post" style="max-width: 400px; margin: 0 auto; margin-top:  120px; margin-bottom: 120px; background-color: #F45B69; padding: 30px; border-radius: 30px;">
+            <h2 style="font-family: europa; text-align: center">Klanten-login</h2>
+            <div class="form-error">
+                {% if error %}
+                    {% if error.messageKey|trans(error.messageData, 'security') == 'Account has expired.' %}
+                        <div style="background-color:  white; border-radius: 30px; text-align: center; line-height: 20px; font-family: proxima-nova; padding: 5px 15px;">
+                            <i class="fas fa-exclamation-triangle" style="color: #BA5359;"></i> Uw account is nog niet geverifieerd, check uw inbox voor meer informatie.
+                        </div>
+                    {% elseif error.messageKey|trans(error.messageData, 'security') == 'Invalid credentials.' %}
+                        <div style="background-color:  white; border-radius: 15px; text-align: center; line-height: 40px; font-family: proxima-nova;">
+                            <i class="fas fa-exclamation-triangle" style="color: #BA5359;"></i> Gebruikersnaam of wachtwoord onjuist!
+                        </div>
+                    {% else %}
+                        <div style="background-color:  white; border-radius: 15px; text-align: center; line-height: 40px; font-family: proxima-nova;">
+                            <i class="fas fa-exclamation-triangle" style="color: #BA5359;"></i> {{ error.messageKey|trans(error.messageData, 'security') }}
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="username">Gebruikersnaam:</label>
+                <input type="text" id="username" class="form-control" name="_username" value="{{ last_username }}" />
+            </div>
+            <div class="form-group">
+                <label for="password">Wachtwoord:</label>
+                <input type="password" class="form-control" id="password" name="_password" />
+            </div>
+            <div class="form-group">
+                <span>Nog geen account? <a style="text-decoration: none; color: black;" href="{{ path('register_page') }}"><i class="fas fa-user"></i> Registreren</a></span>
+            </div>
+            <div class="form-group">
+                <span >Wachtwoord vergeten? <a style="text-decoration: none; color: black;" href="{{ path('forget_password_page') }}"><i class="fas fa-undo-alt"></i> Herstellen</a></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="form-control"><i class="fas fa-lock"></i> Inloggen</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% include 'partials/footer.html.twig' %}
+{% endblock %}

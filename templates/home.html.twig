@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {% include 'partials/header.html.twig' %}
+    <div id="content" style="padding-top: 0 !important;">
+        <img src="{{ asset('images/pexels-photo-237018.jpeg') }}" class="header-foto2" alt="">
+        <div class="content-box container">
+            {#<img src="{{ asset('images/header_foto.jpeg') }}" class="header-foto2" alt="">#}
+        <div class="headerFoto">
+            {#<img src="{{ asset('images/header_foto.jpeg') }}" class="header-foto2" alt="">#}
+        </div>
+            <div class="welkom col-md-12">
+                <h2>Welkom op De Dissel</h2>
+            </div>
+
+            <div class="kwaliteiten">
+                <div class="kwaliteit col-md-6">
+                    <h5>Voor ieder wat wils
+                    <i class="fas fa-check icon"></i>
+                    </h5>
+                    <div class="text">
+                        Kies uit meer dan 1600 unieke campers of caravans en probeer een kampeervakantie via Camptoo. Een weekendje weg of een lange zomervakantie? Ons voordelige aanbod is gemakkelijk te boeken!
+                    </div>
+                </div>
+                <div class="kwaliteit col-md-6">
+                    <h5>We zijn er voor jou
+                        <i class="fas fa-check icon"></i>
+                    </h5>
+                    <div class="text">
+                        De dissel zorgt er voor dat je veilig en goed verzekerd op pad kan. Wij checken de campers en caravans, bieden een veilig betalingssysteem en samen met de reviews van medekampeerders zorgen wij voor een betrouwbare community.
+                    </div>
+                </div>
+                <div class="kwaliteit col-md-6">
+                    <h5>Veiligheid boven alles
+                        <i class="fas fa-check icon"></i>
+                    </h5>
+                    <div class="text">
+                        Het Camptoo support team staat altijd voor je klaar! Persoonlijk contact staat bij ons hoog in het vaandel en begeleiden je dan ook graag wanneer je onze hulp nodig hebt.
+                    </div>
+                </div>
+
+                <div class="kwaliteit col-md-6">
+                    <h5>Deel het plezier
+                    <i class="fas fa-check icon"></i>
+                    </h5>
+                    <div class="text">
+                        Door een goed verzekerde particuliere camper of caravan te huren kun je flink wat kosten besparen en duurzaam op vakantie. Ontmoet de verhuurders en deel je ervaringen met onze kampeer community
+                    </div>
+                </div>
+                <div id="test">
+                    <img src="{{ asset('images/campers1.png') }}" style="width: auto; height: 140px; margin-left: 20px;" alt="">
+
+                    <img src="{{ asset('images/caravan1.png') }}" style="width: auto; height: 120px; margin-left: 380px;" alt="">
+                </div>
+            </div>
+            <div class="waarom-ons col-md-6">
+                <div id="waarom col-md-6">
+                <h2>Waarom ons</h2>
+                </div>
+                <div id="kwantiteit col-md-6">
+                    <h5>
+                    <i class="fas fa-check icon"></i>
+                    Aanbod
+                   </h5>
+
+                    <h5>
+                        <i class="fas fa-check icon"></i>
+                        Aanbod
+                    </h5>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {% include 'partials/footer.html.twig' %}
+{% endblock %}
+

@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {% include 'partials/header.html.twig' %}
+    <div id="content">
+        <div class="content-box container">
+            <div class="user-overview-actions row">
+                <h2 class="col-md-6" style="font-family: europa;">Klanten Overzicht</h2>
+                {% if error is defined and error is not empty %}
+                    <div style="position: absolute; z-index: 100; text-align: center; width: 350px; top: 125px; left: 40%; font-family: europa; font-size: 17px;">
+                        <i class="fas fa-meh"></i> {% if error is not empty %}{{ error }} - <a href="{{ path('admin_overview_user') }}"><i class="fas fa-reply"></i> Terugkeren</a>{% endif %}
+                    </div>
+                {% endif %}
+                <form action="{{ path('admin_search_user') }}" class="search-form col-md-6" method="POST">
+                    <input type="text" name="needle" placeholder="Gebruikersnaam" value="{% if searchTerm is defined and searchTerm is not empty %} {{ searchTerm }} {% endif %}">
+                    <input type="submit" value="Zoeken" class="btn btn-primary">
+                </form>
+            </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Gebruikersnaam</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Geverifieerd</th>
+                    <th scope="col">Actief</th>
+                    <th scope="col">Acties</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% if users is defined %}
+                        {% for user in users %}
+                            <tr>
+                                <th scope="row">{{ user.id }}</th>
+                                <td>{{ user.username }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{% if user.isVerified %}<i class="fas fa-check" style="color: #52af52;"></i>{% else %}<i class="fas fa-times" style="color: #F45B69;"></i>{% endif %}</td>
+                                <td>{% if user.isActive %}<i class="fas fa-check" style="color: #52af52;"></i>  {% else %}<i class="fas fa-times" style="color: #F45B69;"></i>{% endif %}</td>
+                                <td>
+                                    {% if user.isActive %}
+                                        <a href="{{ path('admin_user_disable', { id: user.id }) }}" style="text-decoration: none;">
+                                            <div class="user-action"><i class="fas fa-times" style="color: #F45B69"></i> Deactiveren</div>
+                                        </a>
+                                    {% else %}
+                                        <a href="{{ path('admin_user_enable', { id: user.id }) }}" style="text-decoration: none;">
+                                            <div class="user-action"><i class="fas fa-check" style="color: #73b566"></i> Activeren</div>
+                                        </a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% include 'partials/footer.html.twig' %}
+{% endblock %}

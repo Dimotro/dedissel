@@ -1,0 +1,43 @@
+<div id="header">
+    <nav class="header-box container">
+        <div class="brand-box col-md-3">
+            <a href="{{ path('homepage') }}"><img src="{{ asset('images/brand-logo.png') }}" alt=""></a>
+        </div>
+        <ul class="header-nav col-md-6">
+            <li class="nav-item heading-small"><a href="{{ path('huidigaanbod_page') }}">Huidig aanbod</a></li>
+            <li class="nav-item heading-small"><a href="{{ path('overons_page') }}">Over ons</a></li>
+            <li class="nav-item heading-small"><a href="{{ path('contact_page') }}">Contact</a></li>
+            {% if is_granted('ROLE_USER') %}
+                <li class="nav-item heading-small login-button">
+                    <div class="link">
+                        <i class="fas fa-lock icon"></i>Mijn account
+                    </div>
+                    <ul class="user-menu">
+                        <li class="user-item"><a href="{{ path('user_overview_orders') }}"><i class="fas fa-book"></i> Bestellingen</a></li>
+                        <li class="user-item"><a href="{{ path('user_view_details') }}"><i class="fas fa-user"></i> Gegevens</a></li>
+                        <li class="user-item"><a href="{{ path('logout') }}"><i class="fas fa-unlock"></i> Afmelden</a></li>
+                    </ul>
+                </li>
+            {% elseif is_granted('ROLE_ADMIN') %}
+                <li class="nav-item heading-small login-button">
+                    <a href="{{ path('logout') }}" class="link">
+                        <i class="fas fa-lock icon"></i>Mijn account
+                    </a>
+                    <ul class="user-menu">
+                        <li class="user-item"><a href="{{ path('admin_overview_user') }}"><i class="fas fa-users"></i> Klanten</a></li>
+                        <li class="user-item"><a href="{{ path('admin_overview_object') }}"><i class="fas fa-book"></i> Objecten</a></li>
+                        <li class="user-item"><a href="{{ path('admin_overview_option') }}"><i class="fas fa-badge-check"></i> Opties</a></li>
+                        <li class="user-item"><a href="{{ path('admin_config') }}"><i class="fas fa-cog"></i> Instellingen</a></li>
+                        <li class="user-item"><a href="{{ path('logout') }}"><i class="fas fa-unlock"></i> Afmelden</a></li>
+                    </ul>
+                </li>
+            {% else %}
+                <li class="nav-item heading-small login-button"><a href="{{ path('login_page') }}"><i class="fas fa-user icon"></i>Inloggen</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+<div id="mobile-nav">
+
+</div>
+

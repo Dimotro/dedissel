@@ -1,0 +1,51 @@
+security:
+    encoders:
+        App\Entity\Klantaccount:
+            algorithm: bcrypt
+
+    providers:
+        user_provider:
+            entity:
+                class: App\Entity\Klantaccount
+                property: username
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            pattern:    ^/
+            anonymous: ~
+            provider: user_provider
+            user_checker: App\Security\UserChecker
+            form_login:
+                login_path: login_page
+                check_path: login_page
+                use_referer: true
+            logout:
+                path:   /logout
+                target: /
+
+    access_control:
+        # Toegestane routes voor anonieme gebruikers
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/overons, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/huidigaanbod, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/contact, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+
+        # Toegestane routes voor klant-accounts
+        - { path: ^/klant/orders/overzicht, roles: ROLE_USER }
+        - { path: ^/klant/orders/, roles: ROLE_USER }
+        - { path: ^/klant/gegevens/overzicht, roles: ROLE_USER }
+        - { path: ^/klant/gegevens/aanpassen, roles: ROLE_USER }
+
+        # Toegestane routes voor admin-gebruikers
+        - { path: ^/admin/object/add, roles: ROLE_ADMIN }
+        - { path: ^/admin/object/edit/, roles: ROLE_ADMIN }
+        - { path: ^/admin/object/overview, roles: ROLE_ADMIN }
+        - { path: ^/admin/option/add, roles: ROLE_ADMIN }
+        - { path: ^/admin/option/edit/, roles: ROLE_ADMIN }
+        - { path: ^/admin/option/overview, roles: ROLE_ADMIN }
+        - { path: ^/admin/user/edit/, roles: ROLE_ADMIN }
+        - { path: ^/admin/user/overview, roles: ROLE_ADMIN }

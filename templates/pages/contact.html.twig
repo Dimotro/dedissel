@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {% include 'partials/header.html.twig' %}
+    <div id ="contact">
+        <div class="content-contact-box container">
+            <div class="block col-md-6 contact">
+                <div class="contact-header">
+                   <h1>Contact</h1>
+                </div>
+                        <div class="gegevens-box">
+                            <p><b>Onze adres gegevens:</b><br /> H.A. Lorentzstraat 168<br>3331 EE<br>Zwijndrecht</p>
+                        </div>
+            </div>
+
+            <div class="block col-md-6 logo">
+                <img src="{{ asset('images/gs-contact-us.png') }}" alt="">
+            </div>
+
+            <div class="block col-md-6 map s">
+                <div class="iframe">
+                    <iframe width="300" height="250" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJDUEpT-4uxEcRUMKRcvicE2g&key=AIzaSyDm-7VKoI82EowFBBxH8oZHIz5LbZ1K07U" allowfullscreen></iframe>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    {% include 'partials/footer.html.twig' %}
+{% endblock %}

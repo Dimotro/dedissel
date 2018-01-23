@@ -1,0 +1,147 @@
+# Routing voor statische pagina's die voor iedereen beschikbaar zijn (USER_ANONYMOUS)
+homepage:
+    path: /
+    controller: App\Controller\DefaultController::home
+
+contact_page:
+    path: /contact
+    controller: App\Controller\DefaultController::contact
+
+overons_page:
+    path: /overons
+    controller: App\Controller\DefaultController::overons
+
+huidigaanbod_page:
+    path: /huidigaanbod
+    controller: App\Controller\DefaultController::huidigaanbod
+
+register_page:
+    path: /register
+    controller: App\Controller\DefaultController::registerAction
+
+register_success:
+    path: /register/success
+    controller: App\Controller\DefaultController::registerSuccessAction
+
+login_page:
+    path: /login
+    controller: App\Controller\DefaultController::loginAction
+
+forget_password_page:
+    path: /klant/wachtwoord-vergeten
+    controller: App\Controller\DefaultController::forgetPassword
+
+forget_password_action:
+    path: /klant/wachtwoord-vergeten/reset
+    controller: App\Controller\DefaultController::forgetPasswordAction
+
+reset_password_success:
+    path: /klant/wachtwoord-resetten/success
+    controller: App\Controller\DefaultController::resetPasswordSuccess
+
+reset_password_action:
+    path: /klant/wachtwoord-resetten/{token}
+    controller: App\Controller\DefaultController::resetPassword
+
+verify_page:
+    path: /klant/verifieer/{verificationToken}
+    controller: App\Controller\DefaultController::verifyAction
+
+logout:
+    path: /logout
+    # Deze route heeft geen controller nodig sinds Symfony intern deze gebruiker bij deze route uitlogt. Dit is aangegeven in config/packages/security.yaml
+
+
+# Routing voor het standaard klant-gebruiker (ROLE_USER)
+user_overview_orders:
+    path: /klant/orders/overzicht
+    controller: App\Controller\UserController::overviewOrders
+
+user_view_order:
+    path: /klant/orders/{order}
+    controller: App\Controller\UserController::viewOrder
+
+user_view_details:
+    path: /klant/gegevens/overzicht
+    controller: App\Controller\UserController::viewUserDetails
+
+user_edit_credentials:
+    path: /klant/account/aanpassen
+    controller: App\Controller\UserController::editUserCredentials
+
+user_edit_details:
+    path: /klant/gegevens/aanpassen
+    controller: App\Controller\UserController::editUserDetails
+
+user_edit_rijbewijs:
+    path: /klant/rijbewijs/aanpassen
+    controller: App\Controller\UserController::editUserLicense
+
+# Routing voor admin-gedeelte voor beheerders (USER_ADMIN)
+admin_add_object:
+    path: /admin/object/add
+    controller: App\Controller\AdminController::addObject
+
+admin_edit_object:
+    path: /admin/object/edit/{id}
+    controller: App\Controller\AdminController::editObject
+
+admin_delete_object:
+    path: /admin/object/delete/{id}
+    controller: App\Controller\AdminController::deleteObject
+
+admin_overview_object:
+    path: /admin/object/overview
+    controller: App\Controller\AdminController::overviewObject
+
+admin_add_option:
+    path: /admin/option/add
+    controller: App\Controller\AdminController::addOption
+
+admin_edit_option:
+    path: /admin/option/edit/{id}
+    controller: App\Controller\AdminController::editOption
+
+admin_delete_option:
+    path: /admin/option/delete/{id}
+    controller: App\Controller\AdminController::deleteOption
+
+admin_overview_option:
+    path: /admin/option/overview
+    controller: App\Controller\AdminController::overviewOption
+
+admin_overview_user:
+    path: /admin/user/overview
+    controller: App\Controller\AdminController::overviewUser
+
+admin_edit_user:
+    path: /admin/user/edit
+    controller: App\Controller\AdminController::editUser
+
+admin_search_user:
+    path: /admin/user/search
+    controller: App\Controller\AdminController::searchUser
+
+admin_user_disable:
+    path: /admin/user/{id}/disable
+    controller: App\Controller\AdminController::disableUser
+admin_user_enable:
+    path: /admin/user/{id}/enable
+    controller: App\Controller\AdminController::enableUser
+
+admin_config:
+    path: /admin/settings
+    controller: App\Controller\AdminController::settingsAdmin
+
+admin_add_discount:
+    path: /admin/settings/addDiscount
+    controller: App\Controller\AdminController::addDiscount
+
+admin_edit_discount:
+    path: /admin/settings/editDiscount/{id}
+    controller: App\Controller\AdminController::editDiscount
+
+admin_delete_discount:
+    path: /admin/settings/deleteDiscount/{id}
+    controller: App\Controller\AdminController::deleteDiscount
+

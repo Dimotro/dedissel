@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {% include 'partials/header.html.twig' %}
+
+    <div id="overons">
+        <div class="overons-box container">
+            <div class="block col-md-12 overons">
+              <div class="overons-box content">
+                 <h2>Over de Dissel</h2> </br>
+                  <p> Wilt u een camper of caravan huren bij de Dissel?</br></br>
+
+                    Wij zijn zeer ervaren, betrouwbaar en voordelig. Daarbij zijn al onze campers kilometervrij!</br></br>
+
+                    U heeft bij de Dissel een ruime keuze uit maar liefst 70 huurcampers tegen all-in prijzen.</br>
+                    Daarnaast bieden wij ook 24 uurservice. Een camper huurt u al vanaf 65 euro per dag.</br></br>
+                     Bekijk snel de camper en caravan mogelijkheden op onze pagina Huidig aanbod.</p></br></br>
+              </div>
+            </div>
+        </div>
+
+
+        <div class="overons-box1">
+             <div class="block col-md-6 overonsfoto"></div>
+                <img src="{{ asset('images/overons0.png') }}">
+             </div>
+
+            <div class="overons-box2">
+                <img src="{{ asset('images/overons1.png ') }}">
+            </div>
+        </div>
+
+    </div>
+    {% include 'partials/footer.html.twig' %}
+{% endblock %}

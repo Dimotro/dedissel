@@ -1,0 +1,52 @@
+{% extends '/base.html.twig' %}
+{% block body %}
+    {% include '/partials/header.html.twig' %}
+    <div id="content">
+        <div class="content-box container">
+            <div style="max-width: 800px; margin: 0 auto; padding: 30px; border-radius: 30px; background-color: #F45B69" class="default-form">
+                <h2 style="text-align: center; font-family: europa; margin-bottom: 30px;"><i class="far fa-edit"></i> Gegevens aanpassen</h2>
+                {{ form_start(detailsForm) }}
+                <div class="row">
+                    <div class="form-group">
+                        {{ form_errors(detailsForm) }}
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12" style="padding: 0 45px;">
+                        {{ form_row(detailsForm.klantVoorletters) }}
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12" style="padding: 0 45px;">
+                        {{ form_row(detailsForm.klantVoornaam) }}
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12" style="padding: 0 45px;">
+                        {{ form_row(detailsForm.klantTussenvoegsel) }}
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12" style="padding: 0 45px;">
+                        {{ form_row(detailsForm.klantAchternaam) }}
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12" style="padding: 0 45px;">
+                        {{ form_row(detailsForm.klantTelefoon) }}
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12" style="padding: 0 45px;">
+                        {{ form_row(detailsForm.klantMobiel) }}
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12" style="padding: 0 45px;">
+                        {{ form_row(adresForm.klantStraat) }}
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12" style="padding: 0 45px;">
+                        {{ form_row(adresForm.klantHuisnummer) }}
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12" style="padding: 0 45px;">
+                        {{ form_row(adresForm.klantWoonplaats) }}
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12" style="padding: 0 45px;">
+                        {{ form_row(adresForm.klantWoonplaats) }}
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12">
+                        <button type="submit" class="default-button-wide btn btn-primary" style="width: 60%;"><span class="fa-fw"><i class="fas fa-shield-check fa-2x" style="height:20px;"></i> Bevestigen</span></button>
+                    </div>
+                </div>
+                {{ form_end(detailsForm) }}
+            </div>
+        </div>
+    </div>
+    {% include '/partials/footer.html.twig' %}
+{% endblock %}

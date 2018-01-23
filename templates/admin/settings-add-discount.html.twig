@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {% include 'partials/header.html.twig' %}
+    <div id="content">
+        <div class="content-box container">
+            <div style="width: 400px; border-radius: 30px; padding: 30px; margin: 0 auto; margin-top: 80px; margin-bottom: 40px; background-color: #E3656C; ">
+                {{ form_start(form) }}
+                <h2 style="text-align: center; font-family: europa;">Periode toevoegen</h2>
+                <div class="form-group">
+                    {{ form_row(form.actiePeriodeStart, { 'attr': {'class': ''}, 'label': 'Begin actieperiode' }) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.actiePeriodeEinde, { 'attr': {'class': ''}, 'label': 'Einde actieperiode' }) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.actiePercentage, { 'attr': {'class': 'percentageType'}, 'label': 'Actiepercentage' }) }}
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary form-control"><i class="fas fa-plus"></i> Actieperiode toeveogen</button>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+    {% include 'partials/footer.html.twig' %}
+{% endblock %}

@@ -1,0 +1,135 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {% include 'partials/header.html.twig' %}
+    <div id="content">
+        <div class="content-box container">
+            <h1 style="font-family: europa; text-align: center;">Overzicht</h1>
+            <div class="row" style="margin-top: 80px;">
+                <div class="col-md-6">
+                    <div style="padding: 30px; background-color: #BA5359;border-radius: 30px;">
+                        <h2 style="font-family: europa; color: white; margin-top: 0; margin-bottom: 20px;">Persoonlijke gegevens
+                            <a href="{{ path('user_edit_details') }}">
+                                <div class="btn btn-primary" style="border-radius: 30px; float: right;">
+                                    <i class="far fa-edit"></i> Aanpassen
+                                </div>
+                            </a>
+                        </h2>
+                        <div style="border: 3px solid white">
+                            <table class="table vertical-table" style="padding: 30px;">
+                                <tbody>
+                                <tr>
+                                    <th>Voorletters</th>
+                                    <td>{% if klantGegeven.klantVoorletters %}{{ klantGegeven.klantVoorletters }}{% endif %}</td>
+                                </tr>
+                                <tr>
+                                    <th>Voornaam</th>
+                                    <td>{% if klantGegeven.klantVoornaam %}{{ klantGegeven.klantVoornaam }}{% endif %}</td>
+                                </tr>
+                                <tr>
+                                    <th>Tussenvoegsel</th>
+                                    <td>{% if klantGegeven.klantTussenvoegsel %}{{ klantGegeven.klantTussenvoegsel }}{{ klantGegeven.klantTussenvoegsel }}{% endif %}</td>
+                                </tr>
+                                <tr>
+                                    <th>Achternaam</th>
+                                    <td>{% if klantGegeven.klantAchternaam %}{{ klantGegeven.klantAchternaam }}{% endif %}</td>
+                                </tr>
+                                <tr>
+                                    <th>Adres</th>
+                                    <td>
+                                        {% if klantNAW.klantStraat and klantNAW.klantHuisnummer %}
+                                            {{ klantNAW.klantStraat ~ ' ' ~ klantNAW.klantHuisnummer }}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Woonplaats</th>
+                                    <td>{% if klantNAW.klantWoonplaats %}{{ klantNAW.klantWoonplaats }}{% endif %}</td>
+                                </tr>
+                                <tr>
+                                    <th>Telefoonnummer</th>
+                                    <td>{% if klantGegeven.klantTelefoon %}{{ klantGegeven.klantTelefoon }}{% endif %}</td>
+                                </tr>
+                                <tr>
+                                    <th>Mobiel</th>
+                                    <td>{% if klantGegeven.klantMobiel %}{{ klantGegeven.klantMobiel }}{% endif %}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    {% if rijbewijs %}
+                    <div style="padding: 30px; background-color: #BA5359;border-radius: 30px;">
+                        <h2 style="font-family: europa; color: white; margin-top: 0; margin-bottom: 20px;">Rijbewijs
+                            {% if rijbewijs %}
+                                <a href="{{ path('user_edit_rijbewijs') }}">
+                                    <div class="btn btn-primary" style="border-radius: 30px; float: right;">
+                                        <i class="far fa-edit"></i> Aanpassen
+                                    </div>
+                                </a>
+                            {% else %}
+                                <a href="{{ path('user_edit_rijbewijs') }}">
+                                    <div class="btn btn-primary" style="border-radius: 30px; float: right;">
+                                        <i class="far fa-plus"></i> Toevoegen
+                                    </div>
+                                </a>
+                            {% endif %}
+                        </h2>
+                        <div style="border: 3px solid white">
+                            <table class="table vertical-table" style="padding: 30px;">
+                                <tbody>
+                                <tr>
+                                    <th>Rijbewijsnummer</th>
+                                    <td>{{ rijbewijs.rijbewijsnummer }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Rijbewijstype</th>
+                                    <td>{% for key,type in rijbewijs.rijbewijsType %} {% if type %}{{ key }}, {% endif %} {% endfor %}</td>
+                                </tr>
+                                <tr>
+                                    <th>Geldig tot</th>
+                                    <td>{{ rijbewijs.rijbewijsGeldigTot|date('d-m-yy') }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Gecontroleerd</th>
+                                    <td>{{ rijbewijs.rijbewijsGecontroleerd ? '<i class="fas fa-check" style="color: #73B566;"></i>' : '<i class="fas fa-times" style="color: white;"></i>' }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div style="padding: 30px; background-color: #BA5359;border-radius: 30px; margin-top: 30px;">
+                        <h2 style="font-family: europa; color: white; margin-top: 0; margin-bottom: 20px;">Account-instellingen
+                            <a href="{{ path('user_edit_credentials') }}">
+                                <div class="btn btn-primary" style="border-radius: 30px; float: right;">
+                                    <i class="far fa-edit"></i> Aanpassen
+                                </div>
+                            </a>
+                        </h2>
+                        <div style="border: 3px solid white">
+                            <table class="table vertical-table" style="padding: 30px;">
+                                <tbody>
+                                <tr>
+                                    <th>Gebruikersnaam</th>
+                                    <td>{{ klant.username }}</td>
+                                </tr>
+                                <tr>
+                                    <th>E-mail</th>
+                                    <td>{{ klant.email }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Wachtwoord</th>
+                                    <td>********</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include 'partials/footer.html.twig' %}
+{% endblock %}
