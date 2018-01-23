@@ -10,6 +10,7 @@ namespace App\Controller;
 
 use App\Entity\Klantaccount;
 use App\Entity\Klantadres;
+use App\Entity\Klantgegeven;
 use App\Entity\Rijbewijs;
 use App\Form\AdresType;
 use App\Form\EditCredentialsType;
@@ -38,10 +39,21 @@ class UserController extends Controller
     public function viewUserDetails(UserInterface $user)
     {
         $klant = $this->getDoctrine()->getRepository(Klantaccount::class)->find($user);
-        $klantgegevens = $user->getKlantPersoonlijkeGegevens();
-        $rijbewijs = $klantgegevens->getRijbewijs();
-        $klantNAW = $klantgegevens->getKlantNAW();
 
+        $klantgegevens = $user->getKlantPersoonlijkeGegevens();
+        if (!$klantgegevens) {
+            $klantgegevens = new Klantgegeven();
+        }
+
+        $rijbewijs = $klantgegevens->getRijbewijs();
+        if ( !$rijbewijs ){
+            $rijbewijs = new Rijbewijs();
+        }
+
+        $klantNAW = $klantgegevens->getKlantNAW();
+        if ( !$klantNAW ) {
+            $klantNAW = new Klantadres();
+        }
 
         return $this->render('user/user-overview.html.twig', array(
             'klant' => $klant,
