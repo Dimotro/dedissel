@@ -2,6 +2,7 @@
 {% block body %}
     {% include 'partials/header.html.twig' %}
         <div id="huidigaanbod">
+            <img src="{{ asset('images/pexels-photo-237018.jpeg') }}" class="header-foto2" alt="">
             <div class="huidigaanbod-box container">
                 <div class="block col-md-12">
                     <div class="head">
@@ -27,6 +28,10 @@
                         {% endfor %}
                     </div>
                 </div>
+                <ul class="pager">
+                    <li><a href="#" class="vorige">Vorige</a></li>
+                    <li><a href="#" class="volgende">Volgende</a></li>
+                </ul>
             </div>
         </div>
     {% include 'partials/footer.html.twig' %}
