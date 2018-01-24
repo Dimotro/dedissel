@@ -2,29 +2,75 @@
 {% block body %}
     {% include 'partials/header.html.twig' %}
         <div id="huidigaanbod">
-            <img src="{{ asset('images/pexels-photo-237018.jpeg') }}" class="header-foto2" alt="">
-            <div class="huidigaanbod-box container">
+            <div class="header-foto2" style="background-image: url({{ asset('images/pexels-photo-237018.jpeg') }});"></div>
+            <div class="content-box container">
                 <div class="block col-md-12">
                     <div class="head">
-                        <h2>Campers & Caravans</h2>
-                        <p>Hier bij de Dissel hebben wij een exclusief aantal campers en caravans te huur.<br>
-                            Hier onder ziet u al onze te huren campers en caravans, we hebben voor iedereen wel wat moois staan.<br>
-                            Of u nou een leuke knussen caravan wilt om lekker dat echte kampeer gevoel te krijgen, of een hele luxe camper met alles er op en er aan, wij hebben het voor u!</p>
+                        <h2 style="font-family: europa;">Huidig aanbod</h2>
+                        <p style="font-family: proxima-nova;">Hier bij de Dissel hebben wij een exclusief aantal campers en caravans te huur.
+                            Hier onder ziet u al onze te huren campers en caravans, we hebben voor iedereen wel wat moois staan.
+                            Of u nou een leuke knussen caravan wilt om lekker dat echte kampeer gevoel te krijgen, of een hele luxe camper met alles er op en er aan, wij hebben het voor u!
+                        </p>
+                        <p style="font-family: proxima-nova;">
+                            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit
+                        </p>
+                        <p style="font-family: proxima-nova;">
+                            Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur                        </p>
                     </div>
                 </div>
                 <div class="huidigaanbod-content">
                     <div class="block row aanbod">
-                        {% for object in objecten %}
-                            <div class="col-sm-4">
-                                <div style="background-color: #BA5359;">
-                                    <h2 style="font-family: europa; text-align: center; line-height: 45px;">{{ object.objNaam }}</h2>
-                                    <div class="fotos">
-                                        {% for foto in object.fotos %}
-                                            <img class="item-photo" src="/uploads/images/{{ foto }}" alt="">
-                                        {% endfor %}    
+                        {% for key,object in objecten %}
+                                <div class="col-sm-4" style="{% if loop.index > 3 %}margin-top: 30px;{% endif %}">
+                                    <div style="background-color: #BA5359; color: white;">
+                                        <h3 style="font-family: europa; border-bottom: 5px solid #E3656C; margin-bottom: 0; text-align: center; color: white; line-height: 45px;">{{ object.objNaam }}</h3>
+                                        <div style="background-color: white;  padding: 15px 0;">
+                                            <img style="max-width: 80%; margin: 0 auto; display: block;" src="/uploads/images/{{ object.fotos[0] }}" alt="">
+                                        </div>
+                                        <h4 style="text-align: center; font-family: europa; background-color: #D46C6F; line-height: 30px; margin-top: 5px;">Informatie</h4>
+                                        <table class="table" style="font-family: proxima-nova;">
+                                            <tbody>
+                                                <tr>
+                                                    <th>Merk</th>
+                                                    <td style="border-left: 1px solid white;">{{ specificaties[key].merk }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Model</th>
+                                                    <td style="border-left: 1px solid white;">{{ specificaties[key].type }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Bouwjaar</th>
+                                                    <td style="border-left: 1px solid white;">{{ specificaties[key].bouwjaar }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Rijbewijs</th>
+                                                    <td style="border-left: 1px solid white;">{{ specificaties[key].rijbewijsBenodigd }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                        {#<div style="font-family: proxima-nova; padding: 0 30px;">#}
+                                            {#<span style="width: 60px; margin-right: 15px;">Type:</span> {{ object.objType }}#}
+                                        {#</div>#}
+                                        {#<div style="font-family: proxima-nova; padding: 0 30px; padding-bottom: 15px;">#}
+                                            {#<span style="width: 60px; margin-right: 15px;">Model:</span> {{ object.objNaam }}#}
+                                        {#</div>#}
+                                        {#<div style="line-height: 40px; background-color: white; text-align: center; color: black; padding: 0 15px; font-family: proxima-nova; font-size: 18px;">#}
+                                             {#<span style="font-size: 12px;">Vanaf</span> <i class="far fa-euro-sign"></i> {{ object.prijs|number_format(2, ',', ',') }} per dag#}
+                                        {#</div>#}
+                                        <a href="{{ path('view_object', { id: object.id }) }}" style="text-decoration: none;">
+                                            <div style="line-height: 40px; background-color: white; text-align: center; color: black; padding: 0 15px; padding-top: 15px; font-family: proxima-nova; font-size: 18px;">
+                                                <button style="line-height: 30px; padding: 0; height: 30px;" class="btn btn-primary default-button-wide">Bekijk {{ object.objType }}</button>
+                                            </div>
+                                        </a>
+                                        <a href="{{ path('user_add_order', { objectId: object.id }) }}" style="text-decoration: none;">
+                                            <div style="line-height: 40px; background-color: white; text-align: center; color: black; padding: 15px 15px; font-family: proxima-nova; font-size: 18px;">
+                                                <button {% if disabled %}disabled{% endif %} style="line-height: 30px; padding: 0; height: 30px; background-color: #73B566; border: none;" class="btn btn-primary default-button-wide">Huur direct</button>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
-                            </div>
+
                         {% endfor %}
                     </div>
                 </div>

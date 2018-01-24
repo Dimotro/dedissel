@@ -4,17 +4,18 @@
     <div id="content">
         <div class="content-box container">
             <div class="row">
-                <h3 class="col-md-6" style="font-family: europa;">Optie bewerken</h3>
+                <h3 class="col-md-6" style="font-family: europa;"></h3>
                 <div class="col-md-6" style="display: flex; justify-content: flex-end; align-items: center; height: 80px;">
                     <a href="{{ path('admin_overview_option') }}">
-                        <div class="btn btn-primary">
+                        <div class="btn btn-primary" style="font-family: europa; border-radius: 30px;">
                             <i class="fas fa-reply"></i> Terug
                         </div>
                     </a>
                 </div>
             </div>
-            <div style="padding: 30px;">
+            <div class="default-form" style="width: 400px; margin: 0 auto; background-color: white; padding: 30px; border-radius: 30px; border: 5px solid #C84B56; background-color: #C84B56;">
                 {{ form_start(form) }}
+                <h2 style="font-family: europa; text-align: center; color: white;">Optie Aanpassen</h2>
                 <div class="form-group">
                     {{ form_row(form.optieTitel, {'label': 'Naam','attr': { 'class': 'form-control' }}) }}
                 </div>
@@ -24,7 +25,12 @@
                 <div class="form-group">
                     {{ form_row(form.optiePrijs, {'label': 'Prijs','attr': { 'class': 'form-control' }}) }}
                 </div>
-                <input type="submit" value="Opslaan" class="btn btn-primary">
+                <div class="form-group">
+                    {{ form_row(form.fotos, {'label': 'Prijs','attr': { 'class': 'form-control' }}) }}
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="default-button-wide btn btn-primary" >Opslaan</button>
+                </div>
                 {{ form_end(form) }}
             </div>
         </div>

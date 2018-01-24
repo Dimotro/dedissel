@@ -14,6 +14,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -28,6 +30,15 @@ class AddObjectType extends AbstractType
                     'class' => 'form-control'
                 ),
                 'label' => 'Naam',
+                'label_attr' => array(
+                    'class' => 'tk-prixima-nova'
+                )
+            ))
+            ->add('objOmschrijving',TextareaType::class, array(
+                'attr' => array(
+                    'class' => 'form-control'
+                ),
+                'label' => 'Omschrijving',
                 'label_attr' => array(
                     'class' => 'tk-prixima-nova'
                 )
@@ -69,6 +80,7 @@ class AddObjectType extends AbstractType
                 )
             ))
             ->add('fotos',FileType::class, array(
+                'required' => false,
                 'attr' => array(
                     'class' => 'form-control'
                 ),
@@ -76,6 +88,7 @@ class AddObjectType extends AbstractType
                 'multiple' => true
             ))
             ->add('beschikbaarheid',CheckboxType::class, array(
+                'required' => false,
                 'attr' => array(
                     'class' => 'form-check-input'
 
@@ -85,7 +98,19 @@ class AddObjectType extends AbstractType
                     'class' => 'tk-prixima-nova'
                     
                 )
-            ));
+            ))
+            ->add('specificatie', SpecificatieType::class, array(
+                'label' => 'Specificaties',
+                'label_attr' => array(
+                    'class' => 'heading-text'
+                )
+            ))
+        ->add('toevoegen', SubmitType::class, array(
+            'attr' => array(
+                'class' => 'tk-prixima-nova btn btn-primary default-button-wide'
+            ),
+            'label' => 'Toevoegen'
+        ));
     }
 
     public function configureOptions(OptionsResolver $resolver)

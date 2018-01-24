@@ -3,11 +3,11 @@
     {% include 'partials/header.html.twig' %}
     <div id ="contact">
         <div class="content-box container">
-            <div style="width: 500px; padding: 30px; border-radius: 30px; background-color: #F45B69; margin: 0 auto; margin-top: 40px; margin-bottom: 60px;">
+            <div style="width: 800px; padding: 30px; border-radius: 30px; background-color: #F45B69; margin: 0 auto; margin-top: 40px; margin-bottom: 60px;">
                 <div class="row">
                     <h3 class="col-md-6" style="font-family: europa;">Object toevoegen</h3>
                     <div class="col-md-6" style="display: flex; justify-content: flex-end; align-items: center; height: 80px;">
-                        <a href="{{ path('admin_overview_option') }}">
+                        <a href="{{ path('admin_overview_object') }}">
                             <div class="btn btn-primary" style="font-family: proxima-nova; border-radius: 20px;">
                                 <i class="far fa-reply"></i> Terug
                             </div>
@@ -16,8 +16,40 @@
                 </div>
                 <div style="padding: 30px;">
                     {{ form_start(form) }}
-                    {{ form_widget(form) }}
-                    <input type="submit" value="Toevoegen" class="btn btn-primary form-control" style="border-radius: 30px; width: 60%; margin: 0 auto; display: block; margin-top: 30px;">
+                    <div class="row">
+                        <div class="form-group col-md-6 col-sm-12">
+                            {{ form_row(form.objNaam) }}
+                        </div>
+                        <div class="form-group col-md-6 col-sm-12">
+                            {{ form_row(form.chassisnummer) }}
+                        </div>
+                        <div class="form-group col-md-6 col-sm-12">
+                            {{ form_row(form.kenteken) }}
+                        </div>
+                        <div class="form-group col-md-6 col-sm-12">
+                            {{ form_row(form.objType) }}
+                        </div>
+                        <div class="form-group col-md-6 col-sm-12">
+                            {{ form_row(form.prijs) }}
+                        </div>
+                        <div class="form-group col-md-6 col-sm-12">
+                            {{ form_row(form.fotos) }}
+                        </div>
+                        {% for field in form.specificatie %}
+                        <div class="form-group col-md-6 col-sm-12">
+                            {{ form_row(field) }}
+                        </div>
+                        {% endfor %}
+                        <div class="form-group col-md-6 col-sm-12">
+                            {{ form_row(form.beschikbaarheid) }}
+                        </div>
+                        <div class="form-group col-md-6 col-sm-12">
+                            {{ form_row(form.objOmschrijving) }}
+                        </div>
+                        <div class="form-group col-md-6 col-sm-12">
+                            {{ form_row(form.toevoegen) }}
+                        </div>
+                    </div>
                     {{ form_end(form) }}
                 </div>
             </div>

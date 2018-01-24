@@ -47,6 +47,10 @@ verify_page:
     path: /klant/verifieer/{verificationToken}
     controller: App\Controller\DefaultController::verifyAction
 
+view_object:
+    path: /object/bekijk/{id}
+    controller: App\Controller\DefaultController::viewObject
+
 logout:
     path: /logout
     # Deze route heeft geen controller nodig sinds Symfony intern deze gebruiker bij deze route uitlogt. Dit is aangegeven in config/packages/security.yaml
@@ -76,6 +80,14 @@ user_edit_details:
 user_edit_rijbewijs:
     path: /klant/rijbewijs/aanpassen
     controller: App\Controller\UserController::editUserLicense
+
+user_add_order:
+    path: /klant/bestellen/{objectId}/
+    controller: App\Controller\UserController::addOrder
+
+user_add_order_with_options:
+    path: /klant/bestellen/{objectId}/{optionsArr}
+    controller: App\Controller\UserController::addOrderWithOptions
 
 # Routing voor admin-gedeelte voor beheerders (USER_ADMIN)
 admin_add_object:

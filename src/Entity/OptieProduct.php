@@ -31,6 +31,11 @@ class OptieProduct
     private $optiePrijs;
 
     /**
+     * @ORM\Column(type="array")
+     */
+    private $fotos;
+
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $optieDatumUit;
@@ -39,11 +44,6 @@ class OptieProduct
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $optieDatumTerug;
-
-    /**
-     * @ORM\Column(type="dateinterval", nullable=true)
-     */
-    private $optieDagenVerhuurd;
 
     /**
      * @ORM\Column(type="string")
@@ -127,22 +127,6 @@ class OptieProduct
     /**
      * @return mixed
      */
-    public function getOptieDagenVerhuurd()
-    {
-        return $this->optieDagenVerhuurd;
-    }
-
-    /**
-     * @param mixed $optieDagenVerhuurd
-     */
-    public function setOptieDagenVerhuurd($optieDagenVerhuurd)
-    {
-        $this->optieDagenVerhuurd = $optieDagenVerhuurd;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getBeschikbaarheid()
     {
         return $this->beschikbaarheid;
@@ -196,5 +180,19 @@ class OptieProduct
         $this->optieTitel = $optieTitel;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getFotos()
+    {
+        return $this->fotos;
+    }
 
+    /**
+     * @param mixed $fotos
+     */
+    public function setFotos($fotos): void
+    {
+        $this->fotos = $fotos;
+    }
 }

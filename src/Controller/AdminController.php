@@ -6,9 +6,12 @@ use App\Entity\ActiePeriode;
 use App\Entity\Klantaccount;
 use App\Entity\ObjectProduct;
 use App\Entity\OptieProduct;
+use App\Entity\Specificatie;
 use App\Form\ActiePeriodeType;
 use App\Form\AddObjectType;
+use App\Form\EditObjectType;
 use App\Form\OptieType;
+use App\Form\SpecificatieType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -21,14 +24,15 @@ class AdminController extends Controller
         // Nieuwe instance van ObjectProduct
         $objectProduct = new ObjectProduct();
         // Stel het formulier samen op basis van ObjectType
-        $form = $this->createForm(AddObjectType::class, $objectProduct);
+        $objectForm = $this->createForm(AddObjectType::class, $objectProduct);
         // Handel POST requests naar deze route af
-        $form->handleRequest($request);
+        $objectForm->handleRequest($request);
         // Check of gegevens voldoen aan eisen voordat database-calls worden gedaan
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($objectForm->isSubmitted() && $objectForm->isValid()) {
             // Sla de binaire inhoud van de foto op als een string
             $files = $objectProduct->getFotos();
             $fotosArr =  array();
+
             for ( $i = 0; $i <= (count($files) - 1); $i++ ){
                 // Genereer een unieke bestandsnaam en voed toe aan array
                 $fileName = md5(uniqid()).'.'.$files[$i]->guessExtension();
@@ -42,7 +46,6 @@ class AdminController extends Controller
                     $fileName
                 );
             }
-            // Zet de de naam van het bestand in het images veld in de database
             $objectProduct->setFotos($fotosArr);
             // Haal entietiet manager op
             $em = $this->getDoctrine()->getManager();
@@ -54,7 +57,7 @@ class AdminController extends Controller
             return $this->redirectToRoute('admin_overview_object');
         }
         return $this->render('admin/add-object.html.twig', array(
-            'form' => $form->createView()
+            'form' => $objectForm->createView()
         ));
     }
     // Controller voor toevoegen van opties
@@ -69,6 +72,24 @@ class AdminController extends Controller
         // Check of gegevens voldoen aan eisen voordat database-calls worden gedaan
         if ( $form->isSubmitted() && $form->isValid() ){
 
+            $files = $optie->getFotos();
+            $fotosArr =  array();
+            for ( $i = 0; $i <= (count($files) - 1); $i++ ){
+                // Genereer een unieke bestandsnaam en voed toe aan array
+                $fileName = md5(uniqid()).'.'.$files[$i]->guessExtension();
+                array_push(
+                    $fotosArr,
+                    $fileName
+                );
+                // Maak een bestand aan op het product_images_location parameter aangegeven in congig/services.yaml met de unieke bestandsnaam
+                $files[$i]->move(
+                    $this->getParameter('product_images_location'),
+                    $fileName
+                );
+            }
+
+            // Zet de de naam van het bestand in het images veld in de database
+            $optie->setFotos($fotosArr);
 
             // Haal de Entity Manager op dat beschikbaar wordt gesteld door de 'extends Controller'
             $em = $this->getDoctrine()->getManager();
@@ -102,6 +123,11 @@ class AdminController extends Controller
 
     public function deleteObject($id)
     {
+        $object = $this->getDoctrine()->getRepository(ObjectProduct::class)->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($object);
+        $em->flush();
+        return $this->redirectToRoute('admin_overview_object');
     }
 
     public function deleteOption($id)
@@ -147,12 +173,42 @@ class AdminController extends Controller
 
     public function editDiscount()
     {
-
+        // Todo
     }
     // Controller voor aanpassingen van objecten
-    public function editObject($object)
+    public function editObject($id, Request $request)
     {
+        $object = $this->getDoctrine()->getRepository(ObjectProduct::class)->find($id);
+        $form = $this->createForm(EditObjectType::class, $object);
 
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $files = $object->getFotos();
+            $fotosArr =  array();
+            for ( $i = 0; $i <= (count($files) - 1); $i++ ){
+                // Genereer een unieke bestandsnaam en voed toe aan array
+                $fileName = md5(uniqid()).'.'.$files[$i]->guessExtension();
+                array_push(
+                    $fotosArr,
+                    $fileName
+                );
+                // Maak een bestand aan op het product_images_location parameter aangegeven in congig/services.yaml met de unieke bestandsnaam
+                $files[$i]->move(
+                    $this->getParameter('product_images_location'),
+                    $fileName
+                );
+            }
+
+            $em = $this->getDoctrine()->getManager();
+            $object->setFotos($fotosArr);
+            $em->persist($object);
+            $em->flush();
+            return $this->redirectToRoute('admin_overview_object');
+        }
+        return $this->render('admin/edit-object.html.twig', array(
+            'form' => $form->createView()
+        ));
     }
     // Controller voor aanpassingen van opties
     public function editOption($id, Request $request)
@@ -169,10 +225,27 @@ class AdminController extends Controller
         $form->handleRequest($request);
         // Check of formulier correct is ingevult en een POST request wordt gedaan
         if($form->isSubmitted() && $form->isValid()){
+
+            $files = $option->getFotos();
+            $fotosArr =  array();
+            for ( $i = 0; $i <= (count($files) - 1); $i++ ){
+                // Genereer een unieke bestandsnaam en voed toe aan array
+                $fileName = md5(uniqid()).'.'.$files[$i]->guessExtension();
+                array_push(
+                    $fotosArr,
+                    $fileName
+                );
+                // Maak een bestand aan op het product_images_location parameter aangegeven in congig/services.yaml met de unieke bestandsnaam
+                $files[$i]->move(
+                    $this->getParameter('product_images_location'),
+                    $fileName
+                );
+            }
+            $option->setFotos($fotosArr);
             // Sla het bewerkte entiteit op in tijdelijke opslag
             $em->persist($option);
             // Voor databasebewerkingen uit
-            $em->flush($option);
+            $em->flush();
             // Stuur gebruiker terug naar overzicht om veranderingen zichtbaar te maken
             return $this->redirectToRoute('admin_overview_option');
         }
@@ -213,7 +286,8 @@ class AdminController extends Controller
         $objects = $repository->findAll();
         // Laat de Objecten zien op de overzichtpagina
         return $this->render('admin/overview-object.html.twig', array(
-            'objects' => $objects
+            'objects' => $objects,
+            'date' => new \DateTime('now')
         ));
     }
     // Controller voor overzicht van huidige opties
@@ -225,8 +299,6 @@ class AdminController extends Controller
         $options = $em->getRepository(OptieProduct::class)
             // Haalt alle records op
             ->findAll();
-        $ab = $this->getDoctrine()->getRepository(ObjectProduct::class);
-        $objectPrice = $ab->getObjectPriceById(1);
         // Stuur view terug, beschikbaar gesteld door de templating engine door 'extends Controller'
         return $this->render('admin/overview-option.html.twig', array(
             'options' => $options

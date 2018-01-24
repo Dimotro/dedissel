@@ -22,7 +22,7 @@ class ObjectProduct
     private $klantOrder;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Specificatie", inversedBy="object")
+     * @ORM\OneToOne(targetEntity="App\Entity\Specificatie", inversedBy="object", cascade={"persist"})
      */
     private $specificatie;
 
@@ -62,11 +62,11 @@ class ObjectProduct
      */
     private $objDatumTerug;
 
-    /**
-     * @ORM\Column(type="dateinterval",nullable=true)
-     */
-    private $objDagenVerhuurd;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $objOmschrijving;
 
     /**
      * @ORM\Column(type="decimal", nullable=false)
@@ -178,22 +178,6 @@ class ObjectProduct
     /**
      * @return mixed
      */
-    public function getObjDagenVerhuurd()
-    {
-        return $this->objDagenVerhuurd;
-    }
-
-    /**
-     * @param mixed $objDagenVerhuurd
-     */
-    public function setObjDagenVerhuurd($objDagenVerhuurd)
-    {
-        $this->objDagenVerhuurd = $objDagenVerhuurd;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getId()
     {
         return $this->id;
@@ -269,5 +253,21 @@ class ObjectProduct
     public function setObjNaam($objNaam)
     {
         $this->objNaam = $objNaam;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getObjOmschrijving()
+    {
+        return $this->objOmschrijving;
+    }
+
+    /**
+     * @param mixed $objOmschrijving
+     */
+    public function setObjOmschrijving($objOmschrijving): void
+    {
+        $this->objOmschrijving = $objOmschrijving;
     }
 }

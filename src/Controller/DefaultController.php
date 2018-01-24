@@ -12,8 +12,11 @@ use App\Entity\Klantaccount;
 use App\Entity\Klantadres;
 use App\Entity\Klantgegeven;
 use App\Entity\ObjectProduct;
+use App\Entity\OptieProduct;
 use App\Entity\Rijbewijs;
+use App\Entity\Specificatie;
 use App\Form\KlantaccountResetType;
+use App\Form\KlantAccountType;
 use App\Form\RegisterType;
 use Doctrine\Common\Collections\Criteria;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -92,11 +95,17 @@ class DefaultController extends Controller
     }
 
     // Controller voor het huidig aanbod pagina. Deze controller wordt gekoppeld aan een route in config/routing.yaml
-    public function huidigaanbod(){
-        // $this->render kan aangeroepen worden omdat deze templating-engine beschikbaar wordt gesteld door 'extends Controller'
+    public function huidigaanbod(UserInterface $user){
+        $allowOrder = $this->getDoctrine()->getRepository(Klantaccount::class)->find($user)->getisVerified();
         $objecten = $this->getDoctrine()->getRepository(ObjectProduct::class)->findAll();
+        $specificaties = array();
+        foreach ($objecten as $key => $object)  {
+            $specificaties[$key] = $object->getSpecificatie();
+        }
         return $this->render('pages/huidigaanbod.html.twig', array(
-            'objecten' => $objecten
+            'specificaties' => $specificaties,
+            'objecten' => $objecten,
+            'disabled' => !$allowOrder
         ));
     }
 
@@ -250,6 +259,21 @@ class DefaultController extends Controller
         }
     }
 
+    public function viewObject($id)
+    {
+        $object = $this->getDoctrine()->getRepository(ObjectProduct::class)->find($id);
+        $specificaties = $object->getSpecificatie();
+        $query = $this->getDoctrine()->getRepository(OptieProduct::class)->createQueryBuilder('qb')
+            ->where('qb.optieDatumTerug < CURRENT_DATE()')
+            ->getQuery();
+        $opties = $query->execute();
+        return $this->render('pages/view-object.html.twig', array(
+            'object' => $object,
+            'specificatie' => $specificaties,
+            'opties' => $opties
+        ));
+    }
+
     // Route voor het inloggen van AnonymousUser gebruikers
     public function loginAction(Request $request, AuthenticationUtils $authUtils)
     {
@@ -263,5 +287,6 @@ class DefaultController extends Controller
             'last_username' => $lastUsername,
             'error' => $error
         ));
+
     }
 }

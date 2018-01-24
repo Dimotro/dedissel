@@ -11,6 +11,9 @@ namespace App\Form;
 
 use App\Entity\OptieProduct;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -20,9 +23,45 @@ class OptieType extends AbstractType
     {
 
         $builder
-            ->add('optieTitel')
-            ->add('optieOmschrijving')
-            ->add('optiePrijs');
+            ->add('optieTitel', TextType::class,
+                array(
+                    'attr' => array(
+                        'class' => 'form-control'
+                    ),
+                    'label' => 'Titel',
+                    'label_attr' => array(
+                        'class' => 'tk-prixima-nova'
+                    )
+                )
+            )
+            ->add('optieOmschrijving', TextType::class,
+                array(
+                    'attr' => array(
+                        'class' => 'form-control'
+                    ),
+                    'label' => 'Omschrijving',
+                    'label_attr' => array(
+                        'class' => 'tk-prixima-nova'
+                    )
+                )
+            )
+            ->add('optiePrijs', NumberType::class, array(
+                    'attr' => array(
+                        'class' => 'form-control'
+                    ),
+                    'label' => 'Prijs',
+                    'label_attr' => array(
+                        'class' => 'tk-prixima-nova'
+                    )
+                )
+            )
+            ->add('fotos',FileType::class, array(
+                'attr' => array(
+                    'class' => 'form-control'
+                ),
+                'label' => "Foto's",
+                'multiple' => true
+            ));
 
     }
     public function configureOptions(OptionsResolver $resolver)

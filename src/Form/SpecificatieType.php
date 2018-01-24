@@ -21,10 +21,87 @@ class SpecificatieType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('merk',TextType::class)
-            ->add('type',TextType::class)
-            ->add('bouwjaar',NumberType::class)
-            ->add('massaInventaris',NumberType::class);
+            ->add('merk',TextType::class, array(
+                    'attr' => array(
+                        'class' => 'form-control'
+                    ),
+                    'label' => 'Merk',
+                    'label_attr' => array(
+                        'class' => 'tk-prixima-nova'
+                    ))
+            )
+            ->add('type',TextType::class, array(
+                    'attr' => array(
+                        'class' => 'form-control'
+                    ),
+                    'label' => 'Model',
+                    'label_attr' => array(
+                        'class' => 'tk-prixima-nova'
+                    ))
+            )
+            ->add('bouwjaar',NumberType::class, array(
+                    'attr' => array(
+                        'class' => 'form-control'
+                    ),
+                    'label' => 'Bouwjaar',
+                    'label_attr' => array(
+                        'class' => 'tk-prixima-nova'
+                    ))
+            )
+            ->add('massaInventaris',NumberType::class, array(
+                    'attr' => array(
+                        'class' => 'form-control'
+                    ),
+                    'label' => 'Massa inventaris',
+                    'label_attr' => array(
+                        'class' => 'tk-prixima-nova'
+                    ))
+            )
+            ->add('massaMax',NumberType::class, array(
+                    'attr' => array(
+                        'class' => 'form-control'
+                    ),
+                    'label' => 'Maximale massa',
+                    'label_attr' => array(
+                        'class' => 'tk-prixima-nova'
+                    ))
+            )
+            ->add('lengteTot',NumberType::class, array(
+                    'attr' => array(
+                        'class' => 'form-control'
+                    ),
+                    'label' => 'Lengte tot',
+                    'label_attr' => array(
+                        'class' => 'tk-prixima-nova'
+                    ))
+            )
+            ->add('lengteOpbouw',NumberType::class, array(
+                    'attr' => array(
+                        'class' => 'form-control'
+                    ),
+                    'label' => 'Lengte inbouw',
+                    'label_attr' => array(
+                        'class' => 'tk-prixima-nova'
+                    ))
+            )
+            ->add('hoogte',NumberType::class, array(
+                    'attr' => array(
+                        'class' => 'form-control'
+                    ),
+                    'label' => 'Hoogte',
+                    'label_attr' => array(
+                        'class' => 'tk-prixima-nova'
+                    ))
+            )
+            ->add('rijbewijsBenodigd', TextType::class, array(
+                    'attr' => array(
+                        'class' => 'form-control'
+                    ),
+                    'label' => 'Rijbewijs benodigd',
+                    'label_attr' => array(
+                        'class' => 'tk-prixima-nova'
+                    ))
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)

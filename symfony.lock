@@ -53,9 +53,6 @@
     "doctrine/lexer": {
         "version": "v1.0.1"
     },
-    "doctrine/migrations": {
-        "version": "v1.6.2"
-    },
     "doctrine/orm": {
         "version": "v2.6.0"
     },
@@ -70,12 +67,6 @@
     },
     "monolog/monolog": {
         "version": "1.23.0"
-    },
-    "ocramius/package-versions": {
-        "version": "1.2.0"
-    },
-    "ocramius/proxy-manager": {
-        "version": "2.1.1"
     },
     "psr/cache": {
         "version": "1.0.1"
@@ -212,6 +203,9 @@
     "symfony/orm-pack": {
         "version": "v1.0.5"
     },
+    "symfony/polyfill-apcu": {
+        "version": "v1.1.0"
+    },
     "symfony/polyfill-intl-icu": {
         "version": "v1.6.0"
     },
@@ -220,6 +214,9 @@
     },
     "symfony/polyfill-php72": {
         "version": "v1.6.0"
+    },
+    "symfony/polyfill-util": {
+        "version": "v1.0.0"
     },
     "symfony/process": {
         "version": "v4.0.3"
@@ -241,6 +238,9 @@
     },
     "symfony/security": {
         "version": "v4.0.3"
+    },
+    "symfony/security-acl": {
+        "version": "v3.0.0"
     },
     "symfony/security-bundle": {
         "version": "3.3",
@@ -325,11 +325,5 @@
     },
     "twig/twig": {
         "version": "v2.4.4"
-    },
-    "zendframework/zend-code": {
-        "version": "3.3.0"
-    },
-    "zendframework/zend-eventmanager": {
-        "version": "3.2.0"
     }
 }

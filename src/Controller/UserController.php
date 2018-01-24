@@ -11,6 +11,8 @@ namespace App\Controller;
 use App\Entity\Klantaccount;
 use App\Entity\Klantadres;
 use App\Entity\Klantgegeven;
+use App\Entity\KlantOrder;
+use App\Entity\ObjectProduct;
 use App\Entity\Rijbewijs;
 use App\Form\AdresType;
 use App\Form\EditCredentialsType;
@@ -140,5 +142,19 @@ class UserController extends Controller
             'form' => $form->createView(),
             ''
         ));
+    }
+
+    public function addOrder($objectId)
+    {
+        $object = $this->getDoctrine()->getRepository(ObjectProduct::class)->find($objectId);
+        $order = new KlantOrder();
+        $order->setObjectProduct($object);
+        return $this->render('user/new-order.html.twig', array(
+            'object' => $object
+        ));
+    }
+
+    public function addOrderWithOptions($optionsArr){
+
     }
 }

@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+{% include 'partials/header.html.twig' %}
+<div id="content">
+    <div class="row">
+        <ol class="breadcrumb container" style="font-family: proxima-nova;">
+            <li class="breadcrumb-item"><a href="{{ path('homepage') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('huidigaanbod_page') }}">Huidig aanbod</a></li>
+            <li class="breadcrumb-x item active">{{ object.objNaam }}</li>
+        </ol>
+    </div>
+    <div class="content-box container"  style="padding-bottom: 30px;">
+        <div class="row">
+            <div class="col-md-4" style="background-color: #F45B69; color: white; border-radius: 15px;">
+                <div class="head-image" style="padding: 30px; background-color: white; margin-top: 15px; border-radius: 30px;">
+                    <img src="/uploads/images/{{ object.fotos[0] }}" alt="" style="width: 100%; height: auto;">
+                </div>
+                {% if object.fotos|length > 1 %}
+                <div class="other-images">
+                    {% for key,image in object.fotos %}
+                        <img src="/uploads/images/{{ image }}" alt="" style="width: 100%; height: auto;">
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <h4 style="font-family: europa; text-align: center;">Specificaties</h4>
+                <table class="table" style="font-family: proxima-nova; width: 80%; margin: 0 auto;">
+                    <tbdody>
+                        <tr>
+                            <th>Merk</th>
+                            <td>{{ specificatie.merk }}</td>
+                        </tr>
+                        <tr>
+                            <th>Model</th>
+                            <td>{{ specificatie.type }}</td>
+                        </tr>
+                        <tr>
+                            <th>Inventarismassa</th>
+                            <td>{{ specificatie.massaInventaris }}Kg</td>
+                        </tr>
+                        <tr>
+                            <th>Max. massa</th>
+                            <td>{{ specificatie.massaMax }}Kg</td>
+                        </tr>
+                        <tr>
+                            <th>Max. lengte</th>
+                            <td>{{ specificatie.lengteTot }}M</td>
+                        </tr>
+                        <tr>
+                            <th>Lengte opbouw</th>
+                            <td>{{ specificatie.lengteOpbouw }}M</td>
+                        </tr>
+                        <tr>
+                            <th>Hoogte</th>
+                            <td>{{ specificatie.hoogte }}M</td>
+                        </tr>
+                        <tr>
+                            <th>Rijbewijs benodigd</th>
+                            <td>{{ specificatie.rijbewijsBenodigd }}</td>
+                        </tr>
+                    </tbdody>
+                </table>
+                <div class="form-group">
+                    <a href="{{ path('user_add_order', {'objectId': object.id }) }}">
+                        <button class="btn btn-primary default-button-wide" style="font-size: 16px; margin-top: 15px;">
+                            <i class="fas fa-history"></i> Reserveer direct
+                        </button>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <h2 style="font-family: europa;">{{ object.objNaam }}</h2>
+                <h4 style="font-family: proxima-nova;">{{ object.objOmschrijving }}</h4>
+                <h2 style="font-family: europa">Te combineren met</h2>
+                <div class="row">
+                    {% for key,optie in opties %}
+                        {% if loop.index > 3 %}
+                        {% else %}
+                            <div class="col-md-4" style="color: white;">
+                                <div style="margin: 5px; background-color: #F45B69; border-radius: 15px; padding: 15px 0;border: 5px solid #BA5359;">
+                                    <h4 style="font-family: proxima-nova; line-height: 30px; text-align: center;">{{ optie.optieTitel }}</h4>
+                                    <div style="padding: 0 15px;">
+                                        <img src="/uploads/images/{{ optie.fotos[0] }}" style="width: 100%; height: auto;" alt="">
+                                    </div>
+                                    <div style="font-family: proxima-nova; text-align: center;">
+                                        <i class="fas fa-check"></i> {{ optie.optieOmschrijving }}
+                                    </div>
+                                    <div style="font-family: proxima-nova; text-align: center;">
+                                        <h4><i class="fas fa-euro-sign"></i> {{ optie.optiePrijs|number_format(2, ',', ',') }} per dag</h4>
+                                    </div>
+                                    <label class="check-container" style="text-align: center; display: block; margin-top: 15px;">Toevoegen
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'partials/footer.html.twig' %}
+{% endblock %}

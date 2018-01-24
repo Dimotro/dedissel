@@ -17,7 +17,7 @@ class Specificatie
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\ObjectProduct", mappedBy="specificatie")
+     * @ORM\OneToOne(targetEntity="App\Entity\ObjectProduct", mappedBy="specificatie", cascade={"persist"})
      */
     private $object;
 
@@ -62,14 +62,9 @@ class Specificatie
     private $hoogte;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="string")
      */
     private $rijbewijsBenodigd;
-
-    /**
-     * @ORM\Column(type="decimal")
-     */
-    private $prijsDag;
 
     /**
      * @return mixed
@@ -229,22 +224,6 @@ class Specificatie
     public function setRijbewijsBenodigd($rijbewijsBenodigd)
     {
         $this->rijbewijsBenodigd = $rijbewijsBenodigd;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPrijsDag()
-    {
-        return $this->prijsDag;
-    }
-
-    /**
-     * @param mixed $prijsDag
-     */
-    public function setPrijsDag($prijsDag)
-    {
-        $this->prijsDag = $prijsDag;
     }
 
     /**

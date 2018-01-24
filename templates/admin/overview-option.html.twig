@@ -19,20 +19,19 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th scope="col">#</th>
                     <th scope="col">Titel</th>
                     <th scope="col">Datum uit</th>
                     <th scope="col">Datum terug</th>
                     <th scope="col">Beschikbaar</th>
                     <th scope="col">Prijs</th>
+                    <th scope="col">Foto's</th>
                     <th scope="col">Acties</th>
                 </tr>
                 </thead>
                 <tbody>
                     {% for option in options %}
                         <tr>
-                            <th scope="row">{{ option.id }}</th>
-                            <td>{{ option.optieTitel }}</td>
+                            <th scope="row">{{ option.optieTitel }}</th>
                             <td>
                                 {% if option.optieDatumUit is not empty %}
                                     {{ option.optieDatumUit|date("d/m/Y", false) }}
@@ -48,7 +47,12 @@
                                 {% endif %}
                             </td>
                             <td>{{ option.beschikbaarheid ? '<i class="fas fa-check" style="color: #52af52;"></i>' : '<i class="fas fa-times"></i>' }}</td>
-                                <td>€ {{ option.optiePrijs }}</td>
+                            <td>€ {{ option.optiePrijs }}</td>
+                            <td>
+                                {% if option.fotos %}
+                                    <img style="max-width: 120px;" src="/uploads/images/{{ option.fotos[0] }}" alt="">
+                                {% endif %}    
+                            </td>
                             <td>
                                 <a href="{{ path('admin_edit_option', {'id': option.id }) }}" style="margin-right: 15px;">
                                     <i class="fas fa-edit"></i> Bewerken
