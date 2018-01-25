@@ -66,31 +66,288 @@ class AdminController extends Controller
     public function test()
     {
         $object1 = new ObjectProduct();
-        $object1->setBeschikbaarheid();
+        $object1->setBeschikbaarheid(true);
         $object1->setChassisnummer("7DR239047111147");
-        $object1->setFotos();
+        $object1->setFotos(array());
         $object1->setKenteken("WP-12-AS");
-        $object1->setObjDagenVerhuurd();
-        $object1->setObjDatumTerug();
-        $object1->setObjDatumUit();
-        $object1->setObjNaam();
-        $object1->setObjType();
-        $object1->setPrijs();
+        $object1->setObjDatumTerug(new \DateTime('2018-01-28'));
+        $object1->setObjDatumUit(new \DateTime("2018-01-25"));
+        $object1->setObjNaam("Caravan 1");
+        $object1->setObjType("Caravan");
+        $object1->setPrijs(60);
 
         $specificatie1 = new Specificatie();
-        $specificatie1->setObject();
-        $specificatie1->setMerk();
-        $specificatie1->setType();
-        $specificatie1->setBouwjaar();
-        $specificatie1->setMassaInventaris();
-        $specificatie1->setMassaMax();
-        $specificatie1->setLengteTot();
-        $specificatie1->setLengteOpbouw();
-        $specificatie1->setHoogte();
-        $specificatie1->setRijbewijsBenodigd();
-        $specificatie1->setPrijsDag();
+        $specificatie1->setMerk("Hobby");
+        $specificatie1->setType("495 UL");
+        $specificatie1->setBouwjaar(2017);
+        $specificatie1->setMassaInventaris(1350);
+        $specificatie1->setMassaMax(1550);
+        $specificatie1->setLengteTot(713);
+        $specificatie1->setLengteOpbouw(595);
+        $specificatie1->setHoogte(262);
+        $specificatie1->setRijbewijsBenodigd("BE");
+        $object1->setSpecificatie($specificatie1);
 
-        $object1->setSpecificatie();
+
+        //2e row
+        $object2 = new ObjectProduct();
+        $object2->setBeschikbaarheid(true);
+        $object2->setChassisnummer("7DR239047112292");
+        $object2->setFotos(array());
+        $object2->setKenteken("WD-55-TG");
+        $object2->setObjDatumTerug(new \DateTime('2018-01-28'));
+        $object2->setObjDatumUit(new \DateTime("2018-01-25"));
+        $object2->setObjNaam("Caravan 1");
+        $object2->setObjType("Caravan");
+        $object2->setPrijs(50);
+
+        $specificatie2 = new Specificatie();
+        $specificatie2->setMerk("Hobby");
+        $specificatie2->setType("495 UL");
+        $specificatie2->setBouwjaar(2015);
+        $specificatie2->setMassaInventaris(1350);
+        $specificatie2->setMassaMax(1500);
+        $specificatie2->setLengteTot(713);
+        $specificatie2->setLengteOpbouw(595);
+        $specificatie2->setHoogte(262);
+        $specificatie2->setRijbewijsBenodigd("BE");
+
+        $object2->setSpecificatie($specificatie2);
+
+        //3e row
+        $object3 = new ObjectProduct();
+        $object3->setBeschikbaarheid(true);
+        $object3->setChassisnummer("7DR239047233162");
+        $object3->setFotos(array());
+        $object3->setKenteken("WL-23-SD");
+        $object3->setObjDatumTerug(new \DateTime('2018-01-28'));
+        $object3->setObjDatumUit(new \DateTime("2018-01-25"));
+        $object3->setObjNaam("Caravan 1");
+        $object3->setObjType("Caravan");
+        $object3->setPrijs(40);
+
+        $specificatie3 = new Specificatie();
+        $specificatie3->setMerk("Hobby");
+        $specificatie3->setType("460 LU");
+        $specificatie3->setBouwjaar(2013);
+        $specificatie3->setMassaInventaris(1100);
+        $specificatie3->setMassaMax(1350);
+        $specificatie3->setLengteTot(661);
+        $specificatie3->setLengteOpbouw(550);
+        $specificatie3->setHoogte(260);
+        $specificatie3->setRijbewijsBenodigd("BE");
+
+        $specificatie3->setSpecificatie($specificatie3);
+
+
+        //van hier nog invullen van data
+        //4e row
+        $object4 = new ObjectProduct();
+        $object4->setBeschikbaarheid(true);
+        $object4->setChassisnummer("7DR239047119811");
+        $object4->setFotos(array());
+        $object4->setKenteken("WG-13-BM");
+        $object4->setObjDatumTerug(new \DateTime('2018-01-28'));
+        $object4->setObjDatumUit(new \DateTime("2018-01-25"));
+        $object4->setObjNaam("Caravan 1");
+        $object4->setObjType("Caravan");
+        $object4->setPrijs(60);
+
+        $specificatie4 = new Specificatie();
+        $specificatie4->setMerk("Hobby");
+        $specificatie4->setType("495 UL");
+        $specificatie4->setBouwjaar(2018);
+        $specificatie4->setMassaInventaris(1350);
+        $specificatie4->setMassaMax(1550);
+        $specificatie4->setLengteTot(713);
+        $specificatie4->setLengteOpbouw(595);
+        $specificatie4->setHoogte(260);
+        $specificatie4->setRijbewijsBenodigd("BE");
+
+        $specificatie4->setSpecificatie($specificatie4);
+
+
+        //5e row
+        $object5 = new ObjectProduct();
+        $object5->setBeschikbaarheid(true);
+        $object5->setChassisnummer("7DR239047511206");
+        $object5->setFotos(array());
+        $object5->setKenteken("WG-38-TY");
+        $object5->setObjDatumTerug(new \DateTime('2018-01-28'));
+        $object5->setObjDatumUit(new \DateTime("2018-01-25"));
+        $object5->setObjNaam("Caravan 1");
+        $object5->setObjType("Caravan");
+        $object5->setPrijs(40);
+
+        $specificatie5 = new Specificatie();
+        $specificatie5->setMerk("Hobby");
+        $specificatie5->setType("460 LU");
+        $specificatie5->setBouwjaar(2013);
+        $specificatie5->setMassaInventaris(1250);
+        $specificatie5->setMassaMax(1350);
+        $specificatie5->setLengteTot(661);
+        $specificatie5->setLengteOpbouw(550);
+        $specificatie5->setHoogte(260);
+        $specificatie5->setRijbewijsBenodigd("BE");
+
+        $specificatie5->setSpecificatie($specificatie5);
+
+
+        //6e row
+        $object6 = new ObjectProduct();
+        $object6->setBeschikbaarheid(true);
+        $object6->setChassisnummer("7DR239047114003");
+        $object6->setFotos(array());
+        $object6->setKenteken("WX-75-22");
+        $object6->setObjDatumTerug(new \DateTime('2018-01-28'));
+        $object6->setObjDatumUit(new \DateTime("2018-01-25"));
+        $object6->setObjNaam("Caravan 1");
+        $object6->setObjType("Caravan");
+        $object6->setPrijs(40);
+
+        $specificatie6 = new Specificatie();
+        $specificatie6->setMerk("Hobby");
+        $specificatie6->setType("460 LU");
+        $specificatie6->setBouwjaar(2013);
+        $specificatie6->setMassaInventaris(1250);
+        $specificatie6->setMassaMax(1350);
+        $specificatie6->setLengteTot(661);
+        $specificatie6->setLengteOpbouw(550);
+        $specificatie6->setHoogte(260);
+        $specificatie6->setRijbewijsBenodigd("BE");
+
+        $specificatie6->setSpecificatie($specificatie6);
+
+
+        //7e row
+        $object7 = new ObjectProduct();
+        $object7->setBeschikbaarheid(true);
+        $object7->setChassisnummer("7BMDF239047114003");
+        $object7->setFotos(array());
+        $object7->setKenteken("BC-113-P");
+        $object7->setObjDatumTerug(new \DateTime('2018-01-28'));
+        $object7->setObjDatumUit(new \DateTime("2018-01-25"));
+        $object7->setObjNaam("Caravan 1");
+        $object7->setObjType("Camper");
+        $object7->setPrijs(100);
+
+        $specificatie7 = new Specificatie();
+        $specificatie7->setMerk("Optima");
+        $specificatie7->setType("V60GF");
+        $specificatie7->setBouwjaar(2015);
+        $specificatie7->setMassaInventaris(2900);
+        $specificatie7->setMassaMax(3500);
+        $specificatie7->setLengteTot(600);
+        $specificatie7->setLengteOpbouw(430);
+        $specificatie7->setHoogte(270);
+        $specificatie7->setRijbewijsBenodigd("BE");
+
+        $specificatie7->setSpecificatie($specificatie7);
+
+
+        //8e row
+        $object8 = new ObjectProduct();
+        $object8->setBeschikbaarheid(true);
+        $object8->setChassisnummer("7BMDF239042148800");
+        $object8->setFotos(array());
+        $object8->setKenteken("BD-287-T");
+        $object8->setObjDatumTerug(new \DateTime('2018-01-28'));
+        $object8->setObjDatumUit(new \DateTime("2018-01-25"));
+        $object8->setObjNaam("Caravan 1");
+        $object8->setObjType("Camper");
+        $object8->setPrijs(115);
+
+        $specificatie8 = new Specificatie();
+        $specificatie8->setMerk("Optima");
+        $specificatie8->setType("V60GF");
+        $specificatie8->setBouwjaar(2017);
+        $specificatie8->setMassaInventaris(2900);
+        $specificatie8->setMassaMax(3500);
+        $specificatie8->setLengteTot(600);
+        $specificatie8->setLengteOpbouw(430);
+        $specificatie8->setHoogte(270);
+        $specificatie8->setRijbewijsBenodigd("B");
+
+        $specificatie8->setSpecificatie($specificatie8);
+
+
+
+        //row 9
+        $object9 = new ObjectProduct();
+        $object9->setBeschikbaarheid(true);
+        $object9->setChassisnummer("7BMDG239047112297");
+        $object9->setFotos(array());
+        $object9->setKenteken("DV-441-K");
+        $object9->setObjDatumTerug(new \DateTime('2018-01-28'));
+        $object9->setObjDatumUit(new \DateTime("2018-01-25"));
+        $object9->setObjNaam("Caravan 1");
+        $object9->setObjType("Camper");
+        $object9->setPrijs(115);
+
+        $specificatie9 = new Specificatie();
+        $specificatie9->setMerk("Optima");
+        $specificatie9->setType("T70E");
+        $specificatie9->setBouwjaar(2015);
+        $specificatie9->setMassaInventaris(2900);
+        $specificatie9->setMassaMax(1350);
+        $specificatie9->setLengteTot(738);
+        $specificatie9->setLengteOpbouw(510);
+        $specificatie9->setHoogte(270);
+        $specificatie9->setRijbewijsBenodigd("B");
+
+        $specificatie9->setSpecificatie($specificatie9);
+
+
+        //row 10
+        $object10 = new ObjectProduct();
+        $object10->setBeschikbaarheid(true);
+        $object10->setChassisnummer("7BMDFH23904737121");
+        $object10->setFotos(array());
+        $object10->setKenteken("DD-419-L");
+        $object10->setObjDatumTerug(new \DateTime('2018-01-28'));
+        $object10->setObjDatumUit(new \DateTime("2018-01-25"));
+        $object10->setObjNaam("Caravan 1");
+        $object10->setObjType("Camper");
+        $object10->setPrijs(115);
+
+        $specificatie10 = new Specificatie();
+        $specificatie10->setMerk("Optima");
+        $specificatie10->setType("T70E");
+        $specificatie10->setBouwjaar(2018);
+        $specificatie10->setMassaInventaris(2900);
+        $specificatie10->setMassaMax(1350);
+        $specificatie10->setLengteTot(738);
+        $specificatie10->setLengteOpbouw(510);
+        $specificatie10->setHoogte(270);
+        $specificatie10->setRijbewijsBenodigd("B");
+
+        $specificatie10->setSpecificatie($specificatie10);
+
+        //row 11
+        $object11 = new ObjectProduct();
+        $object11->setBeschikbaarheid(true);
+        $object11->setChassisnummer("7BMDK239067822023");
+        $object11->setFotos(array());
+        $object11->setKenteken("DZ-712-R");
+        $object11->setObjDatumTerug(new \DateTime('2018-01-28'));
+        $object11->setObjDatumUit(new \DateTime("2018-01-25"));
+        $object11->setObjNaam("Caravan 1");
+        $object11->setObjType("Camper");
+        $object11->setPrijs(115);
+
+        $specificatie11 = new Specificatie();
+        $specificatie11->setMerk("Optima");
+        $specificatie11->setType("A65GM");
+        $specificatie11->setBouwjaar(2016);
+        $specificatie11->setMassaInventaris(3000);
+        $specificatie11->setMassaMax(3650);
+        $specificatie11->setLengteTot(649);
+        $specificatie11->setLengteOpbouw(520);
+        $specificatie11->setHoogte(277);
+        $specificatie11->setRijbewijsBenodigd("CE");
+
+        $specificatie11->setSpecificatie($specificatie11);
+
 
 
     }
