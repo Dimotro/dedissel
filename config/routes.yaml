@@ -89,6 +89,10 @@ user_add_order_with_options:
     path: /klant/bestellen/{objectId}/{optionsArr}
     controller: App\Controller\UserController::addOrderWithOptions
 
+user_order_success:
+    path: /klant/bestellen/success
+    controller: App\Controller\UserController::orderSuccess
+
 # Routing voor admin-gedeelte voor beheerders (USER_ADMIN)
 admin_add_object:
     path: /admin/object/add
@@ -156,4 +160,8 @@ admin_edit_discount:
 admin_delete_discount:
     path: /admin/settings/deleteDiscount/{id}
     controller: App\Controller\AdminController::deleteDiscount
+
+admin_user_delete:
+    path: /admin/user/delete/{id}
+    controller: App\Controller\AdminController::deleteUser
 

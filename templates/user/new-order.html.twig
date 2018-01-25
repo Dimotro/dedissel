@@ -2,23 +2,142 @@
 {% block body %}
 {% include 'partials/header.html.twig' %}
 <div id="content">
-    <div class="content-box container">
+    <div class="content-box container" style="padding-top: 30px;">
+        {{ form_start(orderForm) }}
         <div class="row">
             <div class="col-md-4">
-                <h4 style="font-family: europa; text-align: center;">Uw geselecteerde items:</h4>
-                <table class="table">
+                <h1 style="font-family: europa; color: #C9A74C; line-height: 100px; margin: 0; padding: 0; font-weight: bold;">Uw bestelling</h1>
+                <h4 style="font-family: europa; text-align: center;">{{ object.objNaam }}</h4>
+
+                {{ form_row(orderForm.objectProduct.objDatumUit) }}
+                {{ form_row(orderForm.objectProduct.objDatumTerug) }}
+                <table class="table" style="font-family: proxima-nova;">
                     <tbody>
-                    <tr>
-                        <th></th>
-                        <td></td>
-                    </tr>
+                        <tr>
+                            <th style="text-align: center;">Prijs/dag</th>
+                            <td style="text-align: center;" class="price"><i class="fas fa-euro-sign"></i> {{ object.prijs|number_format(2, ',', ',') }}</td>
+                        </tr>
+                        <tr>
+                            <th style="text-align: center;">Subtotaal</th>
+                            <td style="text-align: center;" class="actual-price"><i class="fas fa-euro-sign"></i> {{ object.prijs|number_format(2, ',', ',') }}</td>
+                        </tr>
+                        <tr>
+                            <th style="text-align: center;">Korting</th>
+                            <td style="text-align: center;">{% if kortingMultiplier == 1 %}-{% else %}{{ (100 - (kortingMultiplier * 100)) }}%{% endif %}</td>
+                        </tr>
+                        <tr style="">
+                            <th style="text-align: center; border-top: 1px solid black !important;">Totaal</th>
+                            <td data-multiplier="{{ kortingMultiplier }}" style="text-align: center; font-weight: bold; border-top: 1px solid black !important;" class="totalprice"><i class="fas fa-euro-sign"></i> {{ (object.prijs * kortingMultiplier)|number_format(2, ',', ',') }}</td>
+                        </tr>
                     </tbody>
                 </table>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary default-button-wide">
+                        Bestelling plaatsen
+                    </button>
+                </div>
             </div>
             <div class="col-md-8">
-
+                <h1 style="font-family: europa; color: #C9A74C; line-height: 100px; margin: 0; padding: 0; font-weight: bold;">Uw gegevens</h1>
+                <div style="width: 100%; background-color: white; padding: 30px; border-radius: 30px; border: 5px solid #ccc; background-color: white; color: black;">
+                    <div class="row">
+                        <div class="form-group col-md-6 col-sm-12">
+                            {{ form_row(orderForm.klant.klantPersoonlijkeGegevens.klantVoorletters) }}
+                        </div>
+                        <div class="form-group col-md-6 col-sm-12">
+                            {{ form_row(orderForm.klant.klantPersoonlijkeGegevens.klantVoornaam) }}
+                        </div>
+                        <div class="form-group col-md-6 col-sm-12">
+                            {{ form_row(orderForm.klant.klantPersoonlijkeGegevens.klantTussenvoegsel) }}
+                        </div>
+                        <div class="form-group col-md-6 col-sm-12">
+                            {{ form_row(orderForm.klant.klantPersoonlijkeGegevens.klantAchternaam) }}
+                        </div>
+                        <div class="form-group col-md-6 col-sm-12">
+                            {{ form_row(orderForm.klant.klantPersoonlijkeGegevens.klantTelefoon) }}
+                        </div>
+                        <div class="form-group col-md-6 col-sm-12">
+                            {{ form_row(orderForm.klant.klantPersoonlijkeGegevens.klantMobiel) }}
+                        </div>
+                    </div>
+                </div>
+                <div style="width: 100%; background-color: white; padding: 30px; border-radius: 30px; border: 5px solid #ccc; background-color: white; color: black; margin-top: 30px;">
+                    <div class="row">
+                        <div class="form-group col-md-6 col-sm-12">
+                            {{ form_row(orderForm.klant.klantPersoonlijkeGegevens.klantNAW.klantStraat) }}
+                        </div>
+                        <div class="form-group col-md-6 col-sm-12">
+                            {{ form_row(orderForm.klant.klantPersoonlijkeGegevens.klantNAW.klantHuisnummer) }}
+                        </div>
+                        <div class="form-group col-md-6 col-sm-12">
+                            {{ form_row(orderForm.klant.klantPersoonlijkeGegevens.klantNAW.klantWoonplaats) }}
+                        </div>
+                    </div>
+                </div>
+                <div style="width: 100%; background-color: white; padding: 30px; border-radius: 30px; border: 5px solid #ccc; background-color: white; color: black; margin: 30px 0; ">
+                    <div class="row">
+                        <div class="form-row col-md-6 col-sm-12">
+                            {{ form_row(orderForm.klant.klantPersoonlijkeGegevens.rijbewijs.rijbewijsnummer) }}
+                        </div>
+                        <div class="form-row col-md-6 col-sm-12">
+                            {{ form_row(orderForm.klant.klantPersoonlijkeGegevens.rijbewijs.rijbewijsGeldigtot) }}
+                        </div>
+                    </div>
+                    <h4 style="font-family: europa; line-height: 40px; text-align: center;"> Rijbewijs Type</h4>
+                    <div class="row">
+                        <div class="form-group col-md-3 col-sm-3">
+                            {{ form_row(orderForm.klant.klantPersoonlijkeGegevens.rijbewijs.rijbewijsA) }}
+                        </div>
+                        <div class="form-group col-md-3 col-sm-3">
+                            {{ form_row(orderForm.klant.klantPersoonlijkeGegevens.rijbewijs.rijbewijsA1) }}
+                        </div>
+                        <div class="form-group col-md-3 col-sm-3">
+                            {{ form_row(orderForm.klant.klantPersoonlijkeGegevens.rijbewijs.rijbewijsA2) }}
+                        </div>
+                        <div class="form-group col-md-3 col-sm-3">
+                            {{ form_row(orderForm.klant.klantPersoonlijkeGegevens.rijbewijs.rijbewijsAM) }}
+                        </div>
+                        <div class="form-group col-md-3 col-sm-3">
+                            {{ form_row(orderForm.klant.klantPersoonlijkeGegevens.rijbewijs.rijbewijsB) }}
+                        </div>
+                        <div class="form-group col-md-3 col-sm-3">
+                            {{ form_row(orderForm.klant.klantPersoonlijkeGegevens.rijbewijs.rijbewijsBE) }}
+                        </div>
+                        <div class="form-group col-md-3 col-sm-3">
+                            {{ form_row(orderForm.klant.klantPersoonlijkeGegevens.rijbewijs.rijbewijsBPlus) }}
+                        </div>
+                        <div class="form-group col-md-3 col-sm-3">
+                            {{ form_row(orderForm.klant.klantPersoonlijkeGegevens.rijbewijs.rijbewijsC) }}
+                        </div>
+                        <div class="form-group col-md-3 col-sm-3">
+                            {{ form_row(orderForm.klant.klantPersoonlijkeGegevens.rijbewijs.rijbewijsCE) }}
+                        </div>
+                        <div class="form-group col-md-3 col-sm-3">
+                            {{ form_row(orderForm.klant.klantPersoonlijkeGegevens.rijbewijs.rijbewijsC1) }}
+                        </div>
+                        <div class="form-group col-md-3 col-sm-3">
+                            {{ form_row(orderForm.klant.klantPersoonlijkeGegevens.rijbewijs.rijbewijsC1E) }}
+                        </div>
+                        <div class="form-group col-md-3 col-sm-3">
+                            {{ form_row(orderForm.klant.klantPersoonlijkeGegevens.rijbewijs.rijbewijsD) }}
+                        </div>
+                        <div class="form-group col-md-3 col-sm-3">
+                            {{ form_row(orderForm.klant.klantPersoonlijkeGegevens.rijbewijs.rijbewijsDE) }}
+                        </div>
+                        <div class="form-group col-md-3 col-sm-3">
+                            {{ form_row(orderForm.klant.klantPersoonlijkeGegevens.rijbewijs.rijbewijsD1) }}
+                        </div>
+                        <div class="form-group col-md-3 col-sm-3">
+                            {{ form_row(orderForm.klant.klantPersoonlijkeGegevens.rijbewijs.rijbewijsD1E) }}
+                        </div>
+                        <div class="form-group col-md-3 col-sm-3">
+                            {{ form_row(orderForm.klant.klantPersoonlijkeGegevens.rijbewijs.rijbewijsT) }}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+        {{ form_end(orderForm) }}
     </div>
 </div>
 {% include 'partials/footer.html.twig' %}

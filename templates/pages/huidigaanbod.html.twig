@@ -4,6 +4,11 @@
         <div id="huidigaanbod">
             <div class="header-foto2" style="background-image: url({{ asset('images/pexels-photo-237018.jpeg') }});"></div>
             <div class="content-box container">
+                <div class="block col-sm-12">
+                    {% for flashMessage in app.session.flashbag.get('error') %}
+                        {{ flashMessage }}
+                    {% endfor %}
+                </div>
                 <div class="block col-md-12">
                     <div class="head">
                         <h2 style="font-family: europa;">Huidig aanbod</h2>

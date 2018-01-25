@@ -17,12 +17,12 @@ class KlantOrder
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Klantaccount", inversedBy="bestellingen")
+     * @ORM\ManyToOne(targetEntity="Klantaccount", inversedBy="bestellings", cascade={"all"})
      */
     private $klant;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="integer")
      */
     private $ordernummer;
 
@@ -32,15 +32,21 @@ class KlantOrder
     private $orderDatum;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\ObjectProduct", inversedBy="klantOrder")
+     * @ORM\ManyToOne(targetEntity="App\Entity\ObjectProduct", inversedBy="klantOrder", cascade={"all"})
      */
     private $objectProduct;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\OptieProduct", inversedBy="")
+     * @ORM\ManyToOne(targetEntity="App\Entity\OptieProduct", inversedBy="", cascade={"all"})
      * @ORM\Column(nullable=true)
      */
     private $optieProducten;
+
+    public function __construct()
+    {
+        $this->orderDatum = new \DateTime('now');
+        $this->ordernummer = random_int(1, 15);
+    }
 
     /**
      * @return mixed

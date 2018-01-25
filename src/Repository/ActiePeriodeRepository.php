@@ -19,6 +19,14 @@ class ActiePeriodeRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, ActiePeriode::class);
     }
+    public function getCurrentDiscount()
+    {
+        $query = $this->createQueryBuilder('qb')
+            ->andWhere('CURRENT_DATE() BETWEEN qb.actiePeriodeStart AND qb.actiePeriodeEinde')
+            ->setMaxResults(1)
+            ->getQuery();
+        return $query->execute();
+    }
 }
 
 

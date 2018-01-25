@@ -8,18 +8,25 @@
 
 namespace App\Controller;
 
+use App\Entity\ActiePeriode;
 use App\Entity\Klantaccount;
 use App\Entity\Klantadres;
 use App\Entity\Klantgegeven;
 use App\Entity\KlantOrder;
 use App\Entity\ObjectProduct;
 use App\Entity\Rijbewijs;
+use App\Form\AddObjectType;
+use App\Form\AddOrderType;
 use App\Form\AdresType;
 use App\Form\EditCredentialsType;
 use App\Form\DetailsType;
+use App\Form\EditObjectDateType;
+use App\Form\OrderDetailsType;
 use App\Form\RijbewijsType;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -144,14 +151,82 @@ class UserController extends Controller
         ));
     }
 
-    public function addOrder($objectId)
+    public function orderSuccess($objectId, $optionsArr)
     {
+        return $this->render('user/order-success.html.twig');
+    }
+
+    public function addOrder($objectId, UserInterface $user, Request $request)
+    {
+        // Gegevens ophalen
+        $discount = $this->getDoctrine()->getRepository(ActiePeriode::class)->getCurrentDiscount();
         $object = $this->getDoctrine()->getRepository(ObjectProduct::class)->find($objectId);
+        $user = $this->getDoctrine()->getRepository(Klantaccount::class)->find($user);
+        $kortingMultiplier = 1;
+        if($discount){
+            $kortingMultiplier = $discount[0]->getActiePercentage() ? (1 - $discount[0]->getActiePercentage()) : 1;
+        }
+
         $order = new KlantOrder();
+        $order->setKlant($user);
         $order->setObjectProduct($object);
+
+        $orderForm = $this->createForm(AddOrderType::class, $order);
+        $orderForm->handleRequest($request);
+
+        if ($orderForm->isSubmitted() && $orderForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($object);
+            $em->flush();
+            return $this->redirectToRoute('user_order_success');
+        }
+
         return $this->render('user/new-order.html.twig', array(
-            'object' => $object
-        ));
+                'object' => $order->getObjectProduct(),
+                'klantaccount' => $user,
+                'kortingMultiplier' => $kortingMultiplier,
+                'orderForm' => $orderForm->createView()
+            )
+        );
+//        $userDetails = $user->getKlantPersoonlijkeGegevens();
+//        if (!$userDetails) {
+//            $userDetails = new Klantgegeven();
+//            $userNAW = new Klantadres();
+//            $rijbewijs = new Rijbewijs();
+//        } else {
+//            $userNAW = $userDetails->getKlantNAW();
+//            $rijbewijs = $userDetails->getRijbewijs();
+//        }
+//
+//        $userInfoForm = $this->createForm(OrderDetailsType::class, $userDetails);
+//        $adresForm = $this->createForm(AdresType::class, $userNAW);
+//        $rijbewijsForm = $this->createForm(RijbewijsType::class, $rijbewijs);
+//
+//
+//
+//        $tempObject = new ObjectProduct();
+//        $tempObject->setObjDatumTerug(new \DateTime('now + 1 day'));
+//        $tempObject->setObjDatumUit(new \DateTime('now'));
+//
+//
+//
+//        $form = $this->createForm(EditObjectDateType::class, $tempObject);
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted() && $form->isValid() && $adresForm->isSubmitted() && $adresForm->isValid() && $userInfoForm->isSubmitted() && $userInfoForm->isValid()) {
+//            return new Response('YAY');
+//        } else {
+//            return $this->render('user/new-order.html.twig', array(
+//                    'object' => $object,
+//                    'klantaccount' => $user,
+//                    'form' => $form->createView(),
+//                    'kortingMultiplier' => $kortingMultiplier,
+//                    'userInfoForm' => $userInfoForm->createView(),
+//                    'rijbewijsForm' => $rijbewijsForm->createView(),
+//                    'adresForm' => $adresForm->createView()
+//                )
+//            );
+//        }
     }
 
     public function addOrderWithOptions($optionsArr){

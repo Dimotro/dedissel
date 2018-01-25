@@ -51,7 +51,7 @@ class OptieProduct
     private $beschikbaarheid;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\KlantOrder", inversedBy="optieProducten")
+     * @ORM\ManyToOne(targetEntity="App\Entity\KlantOrder", inversedBy="optieProducten", cascade={"all"})
      */
     private $klantOrder;
 

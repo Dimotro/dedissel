@@ -64,22 +64,36 @@ class Klantaccount implements UserInterface, \Serializable
     private $isVerified;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\KlantOrder", mappedBy="klant")
+     * @ORM\OneToMany(targetEntity="App\Entity\KlantOrder", mappedBy="klant", cascade={"all"})
      */
-    private $bestellingen;
+    private $bestellings;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Klantgegeven")
+     * @ORM\OneToOne(targetEntity="App\Entity\Klantgegeven", inversedBy="klantAccount", cascade={"all"})
      */
     private $klantPersoonlijkeGegevens;
 
     public function __construct()
     {
-        $this->bestellingen = new ArrayCollection();
+        $this->bestellings = new ArrayCollection();
         $this->verificationToken = random_int(1, 990000000000);
         $this->forgetToken = random_int(1, 990000000000);
         $this->isActive = true;
         $this->isVerified = false;
+    }
+
+    public function addBestelling(KlantOrder $order)
+    {
+        $this->bestellings[] = $order;
+
+        $order->setKlant($this);
+
+        return $this;
+    }
+    public function removeBestelling(KlantOrder $order)
+    {
+        $this->bestellings->removeElement($order);
+        return $this;
     }
 
     /**
@@ -159,9 +173,9 @@ class Klantaccount implements UserInterface, \Serializable
     }
 
 
-    public function getBestellingen()
+    public function getBestellings()
     {
-        return $this->bestellingen;
+        return $this->bestellings;
     }
 
     public function getUsername()

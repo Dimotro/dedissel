@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -17,12 +18,12 @@ class ObjectProduct
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\KlantOrder", mappedBy="objectProduct")
+     * @ORM\OneToMany(targetEntity="App\Entity\KlantOrder", mappedBy="objectProduct", cascade={"all"})
      */
     private $klantOrder;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Specificatie", inversedBy="object", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Specificatie", inversedBy="object", cascade={"all"})
      */
     private $specificatie;
 
@@ -78,6 +79,11 @@ class ObjectProduct
      * @ORM\Column(type="array")
      */
     private $fotos;
+
+    public function __construct()
+    {
+
+    }
 
     /**
      * @return mixed
@@ -269,5 +275,13 @@ class ObjectProduct
     public function setObjOmschrijving($objOmschrijving): void
     {
         $this->objOmschrijving = $objOmschrijving;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getKlantOrder()
+    {
+        return $this->klantOrder;
     }
 }

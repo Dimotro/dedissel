@@ -10,10 +10,10 @@
                         <i class="fas fa-meh"></i> {% if error is not empty %}{{ error }} - <a href="{{ path('admin_overview_user') }}"><i class="fas fa-reply"></i> Terugkeren</a>{% endif %}
                     </div>
                 {% endif %}
-                <form action="{{ path('admin_search_user') }}" class="search-form col-md-6" method="POST">
-                    <input type="text" name="needle" placeholder="Gebruikersnaam" value="{% if searchTerm is defined and searchTerm is not empty %} {{ searchTerm }} {% endif %}">
-                    <input type="submit" value="Zoeken" class="btn btn-primary">
-                </form>
+                {#<form action="{{ path('admin_search_user') }}" class="search-form col-md-6" method="POST">#}
+                    {#<input type="text" name="needle" placeholder="Gebruikersnaam" value="{% if searchTerm is defined and searchTerm is not empty %} {{ searchTerm }} {% endif %}">#}
+                    {#<input type="submit" value="Zoeken" class="btn btn-primary">#}
+                {#</form>#}
             </div>
             <table class="table">
                 <thead>
@@ -44,6 +44,15 @@
                                         <a href="{{ path('admin_user_enable', { id: user.id }) }}" style="text-decoration: none;">
                                             <div class="user-action"><i class="fas fa-check" style="color: #73b566"></i> Activeren</div>
                                         </a>
+                                    {% endif %}
+                                    {% if orders[user.id] %}
+                                        {% if user.username == 'beheerder' %}
+
+                                        {% else %}
+                                            <a href="{{ path('admin_user_delete', { id: user.id }) }}" style="text-decoration: none;">
+                                                <div class="user-action"><i class="fas fa-trash-alt" style="color: #ccc;"></i> Verwijderen</div>
+                                            </a>
+                                        {% endif %}
                                     {% endif %}
                                 </td>
                             </tr>

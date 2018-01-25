@@ -95,8 +95,8 @@ class DefaultController extends Controller
     }
 
     // Controller voor het huidig aanbod pagina. Deze controller wordt gekoppeld aan een route in config/routing.yaml
-    public function huidigaanbod(UserInterface $user){
-        $allowOrder = $this->getDoctrine()->getRepository(Klantaccount::class)->find($user)->getisVerified();
+    public function huidigaanbod(){
+        $allowOrder = true;
         $objecten = $this->getDoctrine()->getRepository(ObjectProduct::class)->findAll();
         $specificaties = array();
         foreach ($objecten as $key => $object)  {

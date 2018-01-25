@@ -209,7 +209,8 @@ class RijbewijsType extends AbstractType
                 'label' => 'Geldig tot',
                 'attr' => array(
                     'class' => 'form-control'
-                )
+                ),
+                'widget' => 'single_text'
             ));
     }
     public function configureOptions(OptionsResolver $resolver)

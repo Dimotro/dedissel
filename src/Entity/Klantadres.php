@@ -17,7 +17,7 @@ class Klantadres
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Klantgegeven", inversedBy="klantNAW")
+     * @ORM\OneToOne(targetEntity="App\Entity\Klantgegeven", mappedBy="klantNAW", cascade={"all"})
      */
     private $klantGegevens;
 

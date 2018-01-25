@@ -4,12 +4,14 @@ namespace App\Controller;
 
 use App\Entity\ActiePeriode;
 use App\Entity\Klantaccount;
+use App\Entity\KlantOrder;
 use App\Entity\ObjectProduct;
 use App\Entity\OptieProduct;
 use App\Entity\Specificatie;
 use App\Form\ActiePeriodeType;
 use App\Form\AddObjectType;
 use App\Form\EditObjectType;
+use App\Form\KlantAccountType;
 use App\Form\OptieType;
 use App\Form\SpecificatieType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -151,6 +153,15 @@ class AdminController extends Controller
         return $this->redirectToRoute('admin_overview_option', array(
             'error' => 'Interne fout: Optie kan niet verwijderd worden'
         ));
+    }
+
+    public function deleteUser($id)
+    {
+        $user = $this->getDoctrine()->getRepository(Klantaccount::class)->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($user);
+        $em->flush();
+        return $this->redirectToRoute('admin_overview_user');
     }
     // Controller voor het deactiveren van een klant
     public function disableUser($id)
@@ -304,6 +315,7 @@ class AdminController extends Controller
             'options' => $options
         ));
     }
+
     // Controller voor overzicht van klanten/gebruikers
     public function overviewUser()
     {
@@ -311,36 +323,49 @@ class AdminController extends Controller
         $users = $this->getDoctrine()->getManager()
             // Geeft aan welke Repository als basis gebruikt wordt en haalt alle records uit die entity en haalt maximaal 10 gebruikers op
             ->getRepository(Klantaccount::class)->findBy(array(), array(), 10);
-
+//        $userOrders = $this->getDoctrine()->getRepository(Klantaccount::class)->findBy(array(
+//            'bestellings' >= 1
+//        ));
+//        var_dump($userOrders);
+//        exit();
+        $userOrderArr = array();
+        foreach( $users as $key => $user ){
+            if( $user->getBestellings() ){
+                $userOrderArr[$user->getId()] = true;
+            } else{
+                $userOrderArr[$user->getId()] = false;
+            }
+        }
         // Stuur view terug, beschikbaar gesteld door de templating engine door 'extends Controller'
         return $this->render('admin/overview-user.html.twig', array(
             'users' => $users,
-            'searchTerm' => ''
+            'searchTerm' => '',
+            'orders' => $userOrderArr
         ));
     }
-    // Controller voor het zoeken naar gebruikers binnen de users overview
-    public function searchUser(Request $request)
-    {
-        // Haal het gebruikersnaam uit de POST-variabelen
-        $needle = trim($request->request->get('needle'));
-        // Haal entiteit manager op, beschikbaar gesteld door 'extends Controller'
-        $em = $this->getDoctrine()->getManager();
-        // Geef de enititeit-manager een repository en zoek op criteria
-        $user = $em->getRepository(Klantaccount::class)
-            ->findOneBy(['username' => $needle]);
-        // Initialiseer gebruikersnaam variabel als deze gevult moet worden
-        $username = '';
-        if($user){
-            // Vul het variabel met de gebruikersnaam
-            $username = $user->getUsername();
-            // Redirect terug naar de overview pagina met als users variabel met de enkele gezochte user /  geen resultaten
-            return $this->render('admin/overview-user.html.twig', array('users' => $user, 'searchTerm' => $username));
-        }
-        else{
-            // Redirect terug naar de overview pagina met een error over de zoekresultaten
-            return $this->render('admin/overview-user.html.twig' , array('error' => 'Zoekterm heeft 0 resultaten'));
-        }
-    }
+//    // Controller voor het zoeken naar gebruikers binnen de users overview
+//    public function searchUser(Request $request)
+//    {
+//        // Haal het gebruikersnaam uit de POST-variabelen
+//        $needle = trim($request->request->get('needle'));
+//        // Haal entiteit manager op, beschikbaar gesteld door 'extends Controller'
+//        $em = $this->getDoctrine()->getManager();
+//        // Geef de enititeit-manager een repository en zoek op criteria
+//        $user = $em->getRepository(Klantaccount::class)
+//            ->findOneBy(['username' => $needle]);
+//        // Initialiseer gebruikersnaam variabel als deze gevult moet worden
+//        $username = '';
+//        if($user){
+//            // Vul het variabel met de gebruikersnaam
+//            $username = $user->getUsername();
+//            // Redirect terug naar de overview pagina met als users variabel met de enkele gezochte user /  geen resultaten
+//            return $this->render('admin/overview-user.html.twig', array('users' => $user, 'searchTerm' => $username));
+//        }
+//        else{
+//            // Redirect terug naar de overview pagina met een error over de zoekresultaten
+//            return $this->render('admin/overview-user.html.twig' , array('error' => 'Zoekterm heeft 0 resultaten'));
+//        }
+//    }
 
     public function settingsAdmin()
     {

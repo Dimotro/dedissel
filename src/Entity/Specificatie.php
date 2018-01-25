@@ -17,7 +17,7 @@ class Specificatie
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\ObjectProduct", mappedBy="specificatie", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="App\Entity\ObjectProduct", mappedBy="specificatie", cascade={"all"})
      */
     private $object;
 

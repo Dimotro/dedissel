@@ -18,17 +18,17 @@ class Klantgegeven
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Klantaccount")
+     * @ORM\OneToOne(targetEntity="App\Entity\Klantaccount", mappedBy="klantPersoonlijkeGegevens", cascade={"all"})
      */
     private $klantAccount;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Klantadres")
+     * @ORM\OneToOne(targetEntity="App\Entity\Klantadres", inversedBy="klantGegevens", cascade={"all"})
      */
     private $klantNAW;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Rijbewijs")
+     * @ORM\OneToOne(targetEntity="App\Entity\Rijbewijs", inversedBy="klantGegevens", cascade={"all"})
      */
     private $rijbewijs;
 

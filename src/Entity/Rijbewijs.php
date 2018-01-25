@@ -17,13 +17,10 @@ class Rijbewijs
      */
     private $id;
 
-
-    private $klantGegevens;
-
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Testrit", mappedBy="rijbewijs")
+     * @ORM\OneToOne(targetEntity="App\Entity\Klantgegeven", mappedBy="rijbewijs")
      */
-    private $testrit;
+    private $klantGegevens;
 
     /**
      * @ORM\Column(type="integer")
