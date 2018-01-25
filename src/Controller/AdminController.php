@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 class AdminController extends Controller
 {
     // Controller voor toevoegen van objecten
-    public function addObject (Request $request)
+    public function addObject(Request $request)
     {
         // Nieuwe instance van ObjectProduct
         $objectProduct = new ObjectProduct();
@@ -33,11 +33,11 @@ class AdminController extends Controller
         if ($objectForm->isSubmitted() && $objectForm->isValid()) {
             // Sla de binaire inhoud van de foto op als een string
             $files = $objectProduct->getFotos();
-            $fotosArr =  array();
+            $fotosArr = array();
 
-            for ( $i = 0; $i <= (count($files) - 1); $i++ ){
+            for ($i = 0; $i <= (count($files) - 1); $i++) {
                 // Genereer een unieke bestandsnaam en voed toe aan array
-                $fileName = md5(uniqid()).'.'.$files[$i]->guessExtension();
+                $fileName = md5(uniqid()) . '.' . $files[$i]->guessExtension();
                 array_push(
                     $fotosArr,
                     $fileName
@@ -63,7 +63,8 @@ class AdminController extends Controller
         ));
     }
 
-    public function test(){
+    public function test()
+    {
         $object1 = new ObjectProduct();
         $object1->setBeschikbaarheid();
         $object1->setChassisnummer("7DR239047111147");
@@ -93,6 +94,7 @@ class AdminController extends Controller
 
 
     }
+
     // Controller voor toevoegen van opties
     public function addOption(Request $request)
     {
@@ -103,13 +105,13 @@ class AdminController extends Controller
         $form->handleRequest($request);
 
         // Check of gegevens voldoen aan eisen voordat database-calls worden gedaan
-        if ( $form->isSubmitted() && $form->isValid() ){
+        if ($form->isSubmitted() && $form->isValid()) {
 
             $files = $optie->getFotos();
-            $fotosArr =  array();
-            for ( $i = 0; $i <= (count($files) - 1); $i++ ){
+            $fotosArr = array();
+            for ($i = 0; $i <= (count($files) - 1); $i++) {
                 // Genereer een unieke bestandsnaam en voed toe aan array
-                $fileName = md5(uniqid()).'.'.$files[$i]->guessExtension();
+                $fileName = md5(uniqid()) . '.' . $files[$i]->guessExtension();
                 array_push(
                     $fotosArr,
                     $fileName
@@ -172,7 +174,7 @@ class AdminController extends Controller
             // Zoek op primaire sleutel (id) dat als route parameter meegestuurd wordt naar de controller
             ->find($id);
         // Check of optie is gevonden
-        if ($option){
+        if ($option) {
             // Verwijder de gevonden gebruiker in tijdelijke opslag
             $em->remove($option);
             // Voer alle databasebewerkingen uit
@@ -194,6 +196,7 @@ class AdminController extends Controller
         $em->flush();
         return $this->redirectToRoute('admin_overview_user');
     }
+
     // Controller voor het deactiveren van een klant
     public function disableUser($id)
     {
@@ -217,6 +220,7 @@ class AdminController extends Controller
     {
         // Todo
     }
+
     // Controller voor aanpassingen van objecten
     public function editObject($id, Request $request)
     {
@@ -227,10 +231,10 @@ class AdminController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $files = $object->getFotos();
-            $fotosArr =  array();
-            for ( $i = 0; $i <= (count($files) - 1); $i++ ){
+            $fotosArr = array();
+            for ($i = 0; $i <= (count($files) - 1); $i++) {
                 // Genereer een unieke bestandsnaam en voed toe aan array
-                $fileName = md5(uniqid()).'.'.$files[$i]->guessExtension();
+                $fileName = md5(uniqid()) . '.' . $files[$i]->guessExtension();
                 array_push(
                     $fotosArr,
                     $fileName
@@ -252,6 +256,7 @@ class AdminController extends Controller
             'form' => $form->createView()
         ));
     }
+
     // Controller voor aanpassingen van opties
     public function editOption($id, Request $request)
     {
@@ -266,13 +271,13 @@ class AdminController extends Controller
         // Laat het formulier zich dynamisch afhandelen (doordat alle relaties in OptieType aangegeven zijn)
         $form->handleRequest($request);
         // Check of formulier correct is ingevult en een POST request wordt gedaan
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
 
             $files = $option->getFotos();
-            $fotosArr =  array();
-            for ( $i = 0; $i <= (count($files) - 1); $i++ ){
+            $fotosArr = array();
+            for ($i = 0; $i <= (count($files) - 1); $i++) {
                 // Genereer een unieke bestandsnaam en voed toe aan array
-                $fileName = md5(uniqid()).'.'.$files[$i]->guessExtension();
+                $fileName = md5(uniqid()) . '.' . $files[$i]->guessExtension();
                 array_push(
                     $fotosArr,
                     $fileName
@@ -296,11 +301,13 @@ class AdminController extends Controller
             'form' => $form->createView()
         ));
     }
+
     // Controller voor aanpassingen aan gebruikers
     public function editUser()
     {
 
     }
+
     // Controlleer voor het deactiveren van gebruikers
     public function enableUser($id)
     {
@@ -319,6 +326,7 @@ class AdminController extends Controller
         // Laat Klanten overzicht pagina zien met de zichtbare verandering, beschikbaar gesteld door 'extends Controller'
         return $this->redirectToRoute('admin_overview_user');
     }
+
     // Controller voor overzicht van huidige objecten
     public function overviewObject()
     {
@@ -332,6 +340,7 @@ class AdminController extends Controller
             'date' => new \DateTime('now')
         ));
     }
+
     // Controller voor overzicht van huidige opties
     public function overviewOption()
     {
@@ -360,10 +369,10 @@ class AdminController extends Controller
 //        var_dump($userOrders);
 //        exit();
         $userOrderArr = array();
-        foreach( $users as $key => $user ){
-            if( $user->getBestellings() ){
+        foreach ($users as $key => $user) {
+            if ($user->getBestellings()) {
                 $userOrderArr[$user->getId()] = true;
-            } else{
+            } else {
                 $userOrderArr[$user->getId()] = false;
             }
         }
@@ -411,12 +420,11 @@ class AdminController extends Controller
     public function addDiscount(Request $request)
     {
         $actiePeriode = new ActiePeriode();
-        $form =  $this->createForm( ActiePeriodeType::class, $actiePeriode);
+        $form = $this->createForm(ActiePeriodeType::class, $actiePeriode);
 
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $em =  $this->getDoctrine()->getManager();
+            $em = $this->getDoctrine()->getManager();
             $em->persist($actiePeriode);
             $em->flush();
             return $this->render('admin/settings-global.html.twig', array(
@@ -427,5 +435,83 @@ class AdminController extends Controller
         return $this->render('admin/settings-add-discount.html.twig', array(
             'form' => $form->createView()
         ));
+    }
+
+    public function Optionstest()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $optie0 = new OptieProduct();
+        $optie0->setOptieTitel('Voortent');
+        $optie0->setOptieOmschrijving('Mooie voortent');
+        $optie0->setOptiePrijs('100');
+
+
+        $optie1 = new OptieProduct();
+        $optie1->setOptieTitel('Bijzettent');
+        $optie1->setOptieOmschrijving('Mooie bijzettent');
+        $optie1->setOptiePrijs('75');
+
+
+        $optie2 = new OptieProduct();
+        $optie2->setOptieTitel('Windscherm');
+        $optie2->setOptieOmschrijving('Mooie windscherm');
+        $optie2->setOptiePrijs('20');
+
+
+        $optie3 = new OptieProduct();
+        $optie3->setOptieTitel('Barbecue');
+        $optie3->setOptieOmschrijving('Mooie barbecue');
+        $optie3->setOptiePrijs('30');
+
+
+        $optie4 = new OptieProduct();
+        $optie4->setOptieTitel('Skottelbraai');
+        $optie4->setOptieOmschrijving('Mooie skottelbraai');
+        $optie4->setOptiePrijs('50');
+
+
+        $optie5 = new OptieProduct();
+        $optie5->setOptieTitel('Televiesietoestel, schotelantenne en abonnement');
+        $optie5->setOptieOmschrijving('Mooie televisietoestel, schotelantenne en abonnement');
+        $optie5->setOptiePrijs('90');
+
+
+        $optie6 = new OptieProduct();
+        $optie6->setOptieTitel('Uitbreidingsset servies en bestek');
+        $optie6->setOptieOmschrijving('Mooie uitbreidingsset servies en bestek');
+        $optie6->setOptiePrijs('5');
+
+
+        $optie7 = new OptieProduct();
+        $optie7->setOptieTitel('Annuleringsverzekering');
+        $optie7->setOptieOmschrijving('Een top annuleringsverzekering');
+        $optie7->setOptiePrijs('50');
+
+
+        $optie8 = new OptieProduct();
+        $optie8->setOptieTitel('Inboedelverzekering');
+        $optie8->setOptieOmschrijving('Een top inboedelverzekering');
+        $optie8->setOptiePrijs('40');
+
+
+        $optie9 = new OptieProduct();
+        $optie9->setOptieTitel('Verzekerng hagelschade');
+        $optie9->setOptieOmschrijving('Een top verzekering hagelschade');
+        $optie9->setOptiePrijs('50');
+
+
+        $em->persist($optie0);
+        $em->persist($optie1);
+        $em->persist($optie2);
+        $em->persist($optie3);
+        $em->persist($optie4);
+        $em->persist($optie5);
+        $em->persist($optie6);
+        $em->persist($optie7);
+        $em->persist($optie8);
+        $em->persist($optie9);
+
+        $em->flush();
     }
 }

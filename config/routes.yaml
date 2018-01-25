@@ -165,3 +165,6 @@ admin_overview_user:
     path: /admin/user/overview
     controller: App\Controller\AdminController::overviewUser
 
+admin_optionstest:
+    path: /admin/optionstest
+    controller: App\Controller\AdminController::Optionstest
