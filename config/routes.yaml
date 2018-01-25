@@ -57,9 +57,9 @@ logout:
 
 
 # Routing voor het standaard klant-gebruiker (ROLE_USER)
-user_view_order:
-    path: /klant/orders/{order}
-    controller: App\Controller\UserController::viewOrder
+#user_view_order:
+#    path: /klant/orders/{order}
+#    controller: App\Controller\UserController::viewOrder
 
 user_view_details:
     path: /klant/gegevens/overzicht

@@ -34,10 +34,17 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class UserController extends Controller
 {
 
-    public function viewOrder($order)
-    {
-
-    }
+//    public function viewOrder($order)
+//    {
+//        $order = $this->getDoctrine()->getRepository(KlantOrder::class)->find($order);
+//        if (!$order) {
+//            $this->redirectToRoute('user_overview_orders');
+//        } else {
+//            return $this->render('user/view-order.html.twig', array(
+//                'order' => $order
+//            ));
+//        }
+//    }
 
     public function viewUserDetails(UserInterface $user)
     {
@@ -153,9 +160,28 @@ class UserController extends Controller
     public function overviewOrder(UserInterface $user)
     {
         $user = $this->getDoctrine()->getRepository(Klantaccount::class)->find($user);
+        $discount = $this->getDoctrine()->getRepository(ActiePeriode::class)->getCurrentDiscount();
+        $prijsArr = [];
         $bestellingen = $user->getBestellings();
+        foreach ($bestellingen as $key => $order) {
+            $object = $order->getObjectProduct();
+            $date1 = $object->getObjDatumUit();
+            $date2 = $object->getObjDatumTerug();
+            $difference = $date1->diff($date2)->days;
+            $prijs = $object->getPrijs();
+            $totalPrice = 0;
+
+            if ($discount){
+                $discountDay = $discount->getActiePercentage();
+                $totalPrice = ($prijs * $discountDay) * $difference;
+            } else {
+                $totalPrice = $difference * $prijs;
+            }
+            $prijsArr[$object->getId()] = $totalPrice;
+        }
         return $this->render('user/overview-order.html.twig', array(
-            'orders' => $bestellingen
+            'orders' => $bestellingen,
+            'prijsArr' => $prijsArr
         ));
     }
 

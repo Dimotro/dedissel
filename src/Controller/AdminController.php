@@ -592,6 +592,16 @@ class AdminController extends Controller
         // Haal alle huidige objecten op
         $objects = $repository->findAll();
         // Laat de Objecten zien op de overzichtpagina
+
+//        $objArr = array();
+//        foreach($objects as $key => $value){
+//            $objStart = new $value->getObjDatumUit();
+//            $objEnd = new $value->getObjDatumTerug();
+//            $difference = $objStart->diff($objEnd)->days;
+//            var_dump($difference);
+//            exit();
+//        }
+
         return $this->render('admin/overview-object.html.twig', array(
             'objects' => $objects,
             'date' => new \DateTime('now')

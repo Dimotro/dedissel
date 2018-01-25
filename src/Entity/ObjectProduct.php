@@ -82,7 +82,8 @@ class ObjectProduct
 
     public function __construct()
     {
-
+        $this->setObjDatumTerug(new \DateTime('now - 2 years'));
+        $this->setObjDatumUit(new \DateTime('now - 2 years'));
     }
 
     /**

@@ -18,6 +18,10 @@ security:
             anonymous: ~
             provider: user_provider
             user_checker: App\Security\UserChecker
+
+            simple_form:
+                authenticator: App\Security\CaptchaAuthenticator
+
             form_login:
                 login_path: login_page
                 check_path: login_page

@@ -9,21 +9,28 @@
         <table class="table">
             <thead>
             <tr>
-                <th scope="col">#</th>
                 <th scope="col">Klant</th>
                 <th scope="col">Objectnaam</th>
-                <th scope="col">Orderdatum</th>
-
+                <th scope="col">Datum afgifte</th>
+                <th scope="col">Datum teruggave</th>
+                <th scope="col">Totaalbedrag</th>
+                {#<th scope="col">Acties</th>#}
             </tr>
             </thead>
             <tbody>
             {% if orders %}
                 {% for key, order in orders %}
                     <tr>
-                        <td>{{ order.ordernummer }}</td>
                         <td>{{ order.klant.klantPersoonlijkeGegevens.klantVoornaam }} {{ order.klant.klantPersoonlijkeGegevens.klantAchternaam }}</td>
                         <td>{{ order.objectProduct.objNaam }}</td>
-                        <td>{{ order.orderDatum|date('d-m-Y') }}</td>
+                        <td>{{ order.objectProduct.objDatumUit|date('d-m-Y') }}</td>
+                        <td>{{ order.objectProduct.objDatumTerug|date('d-m-Y') }}</td>
+                        <td><i class="fas fa-euro-sign"></i> {{ prijsArr[order.objectProduct.id]|number_format(2, ',', ',')}}</td>
+                        {#<td>#}
+                            {#<a style="text-decoration: none;" href="{{ path('user_view_order', {'order': order.id }) }}">#}
+                                {#<i class="fas fa-eye"></i> Bekijken#}
+                            {#</a>#}
+                        {#</td>#}
                     </tr>
                 {% endfor %}
             {% endif %}

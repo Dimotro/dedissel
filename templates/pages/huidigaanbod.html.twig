@@ -24,7 +24,7 @@
                     </div>
                 </div>
                 <div class="huidigaanbod-content">
-                    <div class="block row aanbod">
+                    <div class="row">
                         {% for key,object in objecten %}
                                 <div class="col-sm-4" style="{% if loop.index > 3 %}margin-top: 30px;{% endif %}">
                                     <div style="background-color: #BA5359; color: white;">
@@ -75,14 +75,9 @@
                                         </a>
                                     </div>
                                 </div>
-
                         {% endfor %}
                     </div>
                 </div>
-                <ul class="pager">
-                    <li><a href="#" class="vorige">Vorige</a></li>
-                    <li><a href="#" class="volgende">Volgende</a></li>
-                </ul>
             </div>
         </div>
     {% include 'partials/footer.html.twig' %}
