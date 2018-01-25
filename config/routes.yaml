@@ -51,6 +51,18 @@ view_object:
     path: /object/bekijk/{id}
     controller: App\Controller\DefaultController::viewObject
 
+objecten_toevoegen_data:
+    path: /adddummyobjects
+    controller: App\Controller\AdminController::test
+
+objecten_toevoegen_data:
+    path: /adddummyobjects
+    controller: App\Controller\AdminController::test
+
+admin_optionstest:
+    path: /adddummuyoptions
+    controller: App\Controller\AdminController::Optionstest
+
 logout:
     path: /logout
     # Deze route heeft geen controller nodig sinds Symfony intern deze gebruiker bij deze route uitlogt. Dit is aangegeven in config/packages/security.yaml
@@ -130,13 +142,10 @@ admin_edit_user:
     path: /admin/user/edit
     controller: App\Controller\AdminController::editUser
 
-admin_search_user:
-    path: /admin/user/search
-    controller: App\Controller\AdminController::searchUser
-
 admin_user_disable:
     path: /admin/user/{id}/disable
     controller: App\Controller\AdminController::disableUser
+
 admin_user_enable:
     path: /admin/user/{id}/enable
     controller: App\Controller\AdminController::enableUser
@@ -164,7 +173,3 @@ admin_user_delete:
 admin_overview_user:
     path: /admin/user/overview
     controller: App\Controller\AdminController::overviewUser
-
-admin_optionstest:
-    path: /admin/optionstest
-    controller: App\Controller\AdminController::Optionstest
