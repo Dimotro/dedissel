@@ -62,6 +62,37 @@ class AdminController extends Controller
             'form' => $objectForm->createView()
         ));
     }
+
+    public function test(){
+        $object1 = new ObjectProduct();
+        $object1->setBeschikbaarheid();
+        $object1->setChassisnummer("7DR239047111147");
+        $object1->setFotos();
+        $object1->setKenteken("WP-12-AS");
+        $object1->setObjDagenVerhuurd();
+        $object1->setObjDatumTerug();
+        $object1->setObjDatumUit();
+        $object1->setObjNaam();
+        $object1->setObjType();
+        $object1->setPrijs();
+
+        $specificatie1 = new Specificatie();
+        $specificatie1->setObject();
+        $specificatie1->setMerk();
+        $specificatie1->setType();
+        $specificatie1->setBouwjaar();
+        $specificatie1->setMassaInventaris();
+        $specificatie1->setMassaMax();
+        $specificatie1->setLengteTot();
+        $specificatie1->setLengteOpbouw();
+        $specificatie1->setHoogte();
+        $specificatie1->setRijbewijsBenodigd();
+        $specificatie1->setPrijsDag();
+
+        $object1->setSpecificatie();
+
+
+    }
     // Controller voor toevoegen van opties
     public function addOption(Request $request)
     {
