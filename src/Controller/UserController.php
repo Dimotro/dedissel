@@ -34,12 +34,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class UserController extends Controller
 {
 
-
-    public function overviewOrders()
-    {
-
-    }
-
     public function viewOrder($order)
     {
 
@@ -156,6 +150,15 @@ class UserController extends Controller
         return $this->render('user/order-success.html.twig');
     }
 
+    public function overviewOrder(UserInterface $user)
+    {
+        $user = $this->getDoctrine()->getRepository(Klantaccount::class)->find($user);
+        $bestellingen = $user->getBestellings();
+        return $this->render('user/overview-order.html.twig', array(
+            'orders' => $bestellingen
+        ));
+    }
+
     public function addOrder($objectId, UserInterface $user, Request $request)
     {
         // Gegevens ophalen
@@ -176,7 +179,7 @@ class UserController extends Controller
 
         if ($orderForm->isSubmitted() && $orderForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($object);
+            $em->persist($order);
             $em->flush();
             return $this->redirectToRoute('user_order_success');
         }

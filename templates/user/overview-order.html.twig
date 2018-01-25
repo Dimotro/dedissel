@@ -2,8 +2,33 @@
 {% block body %}
 {% include 'partials/header.html.twig' %}
 <div id="content">
-    <div class="content-box">
-        <h1 style=""></h1>
+    <div class="content-box container">
+
+        <h1 class="col-md-6" style="font-family: europa;">Order overzicht</h1>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Klant</th>
+                <th scope="col">Objectnaam</th>
+                <th scope="col">Orderdatum</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% if orders %}
+                {% for key, order in orders %}
+                    <tr>
+                        <td>{{ order.ordernummer }}</td>
+                        <td>{{ order.klant.klantPersoonlijkeGegevens.klantVoornaam }} {{ order.klant.klantPersoonlijkeGegevens.klantAchternaam }}</td>
+                        <td>{{ order.objectProduct.objNaam }}</td>
+                        <td>{{ order.orderDatum|date('d-m-Y') }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
     </div>
 </div>
 {% include 'partials/footer.html.twig' %}
