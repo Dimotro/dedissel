@@ -10,6 +10,8 @@ namespace App\Security;
 
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
@@ -21,36 +23,34 @@ use Symfony\Component\Security\Http\Authentication\SimpleFormAuthenticatorInterf
 class CaptchaAuthenticator implements SimpleFormAuthenticatorInterface
 {
     private $encoder;
+    private $requestStack;
 
-    public function __construct(UserPasswordEncoderInterface $encoder)
+    public function __construct(UserPasswordEncoderInterface $encoder, RequestStack $requestStack)
     {
         $this->encoder = $encoder;
+        $this->requestStack = $requestStack;
     }
 
     public function authenticateToken(TokenInterface $token, UserProviderInterface $userProvider, $providerKey)
     {
+        $currentRequest = $this->requestStack->getCurrentRequest();
+        if(!$userCaptchaResponse = $currentRequest->get('g-recaptcha-response')) {
+            throw new CustomUserMessageAuthenticationException('Unfound user captcha', array(), Response::HTTP_PRECONDITION_FAILED);
+        }
+
+        if($this->captchaverify($userCaptchaResponse) ) {
+            throw new CustomUserMessageAuthenticationException('Captcha-verificatie is mislukt', array(), Response::HTTP_PRECONDITION_FAILED);
+        }
+
         try {
             $user = $userProvider->loadUserByUsername($token->getUsername());
         } catch (UsernameNotFoundException $e) {
-            // CAUTION: this message will be returned to the client
-            // (so don't put any un-trusted messages / error strings here)
             throw new CustomUserMessageAuthenticationException('Gebruikersnaam of wachtwoord ongeldig');
         }
 
         $passwordValid = $this->encoder->isPasswordValid($user, $token->getCredentials());
 
         if ($passwordValid) {
-
-            // Logic Captcha Start
-//            if( !$this->captchaverify($this->$request->get('g-recaptcha-response')) ) {
-//                throw new CustomUserMessageAuthenticationException(
-//                    'Captcha-verificatie is mislukt!',
-//                    array(), // Message Data
-//                    412 // HTTP 412 Precondition Failed
-//                );
-//            }
-            // Logic Captcha End
-
             return new UsernamePasswordToken(
                 $user,
                 $user->getPassword(),
@@ -59,9 +59,23 @@ class CaptchaAuthenticator implements SimpleFormAuthenticatorInterface
             );
         }
 
-        // CAUTION: this message will be returned to the client
-        // (so don't put any un-trusted messages / error strings here)
-        throw new CustomUserMessageAuthenticationException('Invalid username or password');
+        try {
+            $user = $userProvider->loadUserByUsername($token->getUsername());
+        } catch (UsernameNotFoundException $e) {
+            throw new CustomUserMessageAuthenticationException('Gebruikersnaam of wachtwoord ongeldig');
+        }
+
+        $passwordValid = $this->encoder->isPasswordValid($user, $token->getCredentials());
+
+        if ($passwordValid) {
+            return new UsernamePasswordToken(
+                $user,
+                $user->getPassword(),
+                $providerKey,
+                $user->getRoles()
+            );
+        }
+            throw new CustomUserMessageAuthenticationException('Invalid username or password');
     }
 
     public function supportsToken(TokenInterface $token, $providerKey)
@@ -87,7 +101,6 @@ class CaptchaAuthenticator implements SimpleFormAuthenticatorInterface
         $response = curl_exec($ch);
         curl_close($ch);
         $data = json_decode($response);
-
         return $data->success;
     }
 }

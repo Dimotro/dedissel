@@ -217,45 +217,23 @@ class UserController extends Controller
                 'orderForm' => $orderForm->createView()
             )
         );
-//        $userDetails = $user->getKlantPersoonlijkeGegevens();
-//        if (!$userDetails) {
-//            $userDetails = new Klantgegeven();
-//            $userNAW = new Klantadres();
-//            $rijbewijs = new Rijbewijs();
-//        } else {
-//            $userNAW = $userDetails->getKlantNAW();
-//            $rijbewijs = $userDetails->getRijbewijs();
-//        }
-//
-//        $userInfoForm = $this->createForm(OrderDetailsType::class, $userDetails);
-//        $adresForm = $this->createForm(AdresType::class, $userNAW);
-//        $rijbewijsForm = $this->createForm(RijbewijsType::class, $rijbewijs);
-//
-//
-//
-//        $tempObject = new ObjectProduct();
-//        $tempObject->setObjDatumTerug(new \DateTime('now + 1 day'));
-//        $tempObject->setObjDatumUit(new \DateTime('now'));
-//
-//
-//
-//        $form = $this->createForm(EditObjectDateType::class, $tempObject);
-//        $form->handleRequest($request);
-//
-//        if ($form->isSubmitted() && $form->isValid() && $adresForm->isSubmitted() && $adresForm->isValid() && $userInfoForm->isSubmitted() && $userInfoForm->isValid()) {
-//            return new Response('YAY');
-//        } else {
-//            return $this->render('user/new-order.html.twig', array(
-//                    'object' => $object,
-//                    'klantaccount' => $user,
-//                    'form' => $form->createView(),
-//                    'kortingMultiplier' => $kortingMultiplier,
-//                    'userInfoForm' => $userInfoForm->createView(),
-//                    'rijbewijsForm' => $rijbewijsForm->createView(),
-//                    'adresForm' => $adresForm->createView()
-//                )
-//            );
-//        }
+    }
+
+    public function disableUser(UserInterface $user){
+        // Haal entity manager op, beschikbaar gesteld door 'extends Controller'
+        $em = $this->getDoctrine()->getManager();
+        // Haal repository op die bij het entiteit hoort
+        $user = $em->getRepository(Klantaccount::class)
+            // Zoek op primaire sleutel (id) dat als route parameter meegestuurd wordt naar de controller
+            ->find($user);
+        // Zet isActive op false
+        $user->setIsActive(false);
+        // Zet gebruiker tijdelijk in opslag om later databasebewerkingen uit te voeren
+        $em->persist($user);
+        // Voer alle database bewerkingen die persist zijn door naar de database
+        $em->flush();
+        // Laat Klanten overzicht pagina zien met de zichtbare verandering
+        return $this->redirectToRoute('logout');
     }
 
     public function addOrderWithOptions($optionsArr){

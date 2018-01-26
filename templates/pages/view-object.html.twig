@@ -13,7 +13,9 @@
         <div class="row">
             <div class="col-md-4" style="background-color: #F45B69; color: white; border-radius: 15px;">
                 <div class="head-image" style="padding: 30px; background-color: white; margin-top: 15px; border-radius: 30px;">
-                    <img src="/uploads/images/{{ object.fotos[0] }}" alt="" style="width: 100%; height: auto;">
+                    {% if object.fotos %}
+                        <img src="/uploads/images/{{ object.fotos[0] }}" alt="" style="width: 100%; height: auto;">
+                    {% endif %}
                 </div>
                 {% if object.fotos|length > 1 %}
                 <div class="other-images">
@@ -70,32 +72,32 @@
             <div class="col-md-8">
                 <h2 style="font-family: europa;">{{ object.objNaam }}</h2>
                 <h4 style="font-family: proxima-nova;">{{ object.objOmschrijving }}</h4>
-                <h2 style="font-family: europa">Te combineren met</h2>
-                <div class="row">
-                    {% for key,optie in opties %}
-                        {% if loop.index > 3 %}
-                        {% else %}
-                            <div class="col-md-4" style="color: white;">
-                                <div style="margin: 5px; background-color: #F45B69; border-radius: 15px; padding: 15px 0;border: 5px solid #BA5359;">
-                                    <h4 style="font-family: proxima-nova; line-height: 30px; text-align: center;">{{ optie.optieTitel }}</h4>
-                                    <div style="padding: 0 15px;">
-                                        <img src="/uploads/images/{{ optie.fotos[0] }}" style="width: 100%; height: auto;" alt="">
-                                    </div>
-                                    <div style="font-family: proxima-nova; text-align: center;">
-                                        <i class="fas fa-check"></i> {{ optie.optieOmschrijving }}
-                                    </div>
-                                    <div style="font-family: proxima-nova; text-align: center;">
-                                        <h4><i class="fas fa-euro-sign"></i> {{ optie.optiePrijs|number_format(2, ',', ',') }} per dag</h4>
-                                    </div>
-                                    <label class="check-container" style="text-align: center; display: block; margin-top: 15px;">Toevoegen
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                </div>
+                {#<h2 style="font-family: europa">Te combineren met</h2>#}
+                {#<div class="row">#}
+                    {#{% for key,optie in opties %}#}
+                        {#{% if loop.index > 3 %}#}
+                        {#{% else %}#}
+                            {#<div class="col-md-4" style="color: white;">#}
+                                {#<div style="margin: 5px; background-color: #F45B69; border-radius: 15px; padding: 15px 0;border: 5px solid #BA5359;">#}
+                                    {#<h4 style="font-family: proxima-nova; line-height: 30px; text-align: center;">{{ optie.optieTitel }}</h4>#}
+                                    {#<div style="padding: 0 15px;">#}
+                                        {#<img src="/uploads/images/{{ optie.fotos[0] }}" style="width: 100%; height: auto;" alt="">#}
+                                    {#</div>#}
+                                    {#<div style="font-family: proxima-nova; text-align: center;">#}
+                                        {#<i class="fas fa-check"></i> {{ optie.optieOmschrijving }}#}
+                                    {#</div>#}
+                                    {#<div style="font-family: proxima-nova; text-align: center;">#}
+                                        {#<h4><i class="fas fa-euro-sign"></i> {{ optie.optiePrijs|number_format(2, ',', ',') }} per dag</h4>#}
+                                    {#</div>#}
+                                    {#<label class="check-container" style="text-align: center; display: block; margin-top: 15px;">Toevoegen#}
+                                        {#<input type="checkbox">#}
+                                        {#<span class="checkmark"></span>#}
+                                    {#</label>#}
+                                {#</div>#}
+                            {#</div>#}
+                        {#{% endif %}#}
+                    {#{% endfor %}#}
+                {#</div>#}
             </div>
         </div>
     </div>

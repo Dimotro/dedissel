@@ -50,8 +50,8 @@ class ObjectRepository extends ServiceEntityRepository
     public function getAvailibleObjects(){
         $date = new \DateTime('now');
         $query = $this->createQueryBuilder('qb')
-            ->where('qb.objDatumTerug >= :date')
-            ->andWhere('qb.objDatumUit >= :date')
+            ->where('qb.objDatumTerug <= :date')
+            ->andWhere('qb.objDatumUit <= :date')
             ->setParameter('date', $date )
             ->getQuery();
         return $query->execute();

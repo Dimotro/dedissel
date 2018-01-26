@@ -15,6 +15,7 @@ use App\Entity\ObjectProduct;
 use App\Entity\OptieProduct;
 use App\Entity\Rijbewijs;
 use App\Entity\Specificatie;
+use App\Form\CaptchaType;
 use App\Form\KlantaccountResetType;
 use App\Form\KlantAccountType;
 use App\Form\RegisterType;
@@ -123,6 +124,27 @@ class DefaultController extends Controller
         // Check of gegevens voldoen aan eisen voordat database-calls worden gedaan
         if ( $form->isSubmitted() && $form->isValid() ){
 
+            $username = $user->getUsername();
+            $found = $this->getDoctrine()->getRepository(Klantaccount::class)->findBy(array(
+                'username' => $username
+            ));
+
+            if ($found) {
+                $random = random_int(1,200);
+                $user->setUsername($username . $random);
+                return $this->render(
+                    'pages/register.html.twig',
+                    array(
+                        'form' => $form->createView(),
+                        'usernameBezet' => true
+                    )
+                );
+            }
+
+            $fountEmail = $this->getDoctrine()->getRepository(Klantaccount::class)->findBy(array(
+                'username' => $username
+            ));
+
             // Codeer het wachtwoord met bcrypt encoder. Wachtwoord wordt tijdelijk plain opgeslagen in het user object. Dit wordt NIET uiteindelijk opgeslage in het database.
             $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
 
@@ -162,7 +184,9 @@ class DefaultController extends Controller
         // Laat het standaard registratie formulier zien als het formulier nog niet verstuurd is of niet valide is
         return $this->render(
             'pages/register.html.twig',
-            array('form' => $form->createView())
+            array(
+                'form' => $form->createView(),
+            )
         );
     }
 
@@ -279,13 +303,17 @@ class DefaultController extends Controller
     {
         // Haal login errors op als deze aanwezig zijn
         $error = $authUtils->getLastAuthenticationError();
+        $form = $this->createForm(CaptchaType::class, array(), array(
+            'action' => $this->generateUrl('login_page')
+        ));
 
         // Haal het laatst ingevulde gebruikersnaam op als deze aanwezig is
         $lastUsername = $authUtils->getLastUsername();
 
         return $this->render('pages/login.html.twig', array(
             'last_username' => $lastUsername,
-            'error' => $error
+            'error' => $error,
+            'form' => $form->createView()
         ));
 
     }

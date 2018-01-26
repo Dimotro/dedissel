@@ -30,7 +30,9 @@
                                     <div style="background-color: #BA5359; color: white;">
                                         <h3 style="font-family: europa; border-bottom: 5px solid #E3656C; margin-bottom: 0; text-align: center; color: white; line-height: 45px;">{{ object.objNaam }}</h3>
                                         <div style="background-color: white;  padding: 15px 0;">
-                                            <img style="max-width: 80%; margin: 0 auto; display: block;" src="/uploads/images/{{ object.fotos[0] }}" alt="">
+                                            {% if object.fotos %}
+                                                <img style="max-width: 80%; margin: 0 auto; display: block;" src="/uploads/images/{{ object.fotos[0] }}" alt="">
+                                            {% endif %}
                                         </div>
                                         <h4 style="text-align: center; font-family: europa; background-color: #D46C6F; line-height: 30px; margin-top: 5px;">Informatie</h4>
                                         <table class="table" style="font-family: proxima-nova;">

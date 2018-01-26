@@ -52,15 +52,11 @@ view_object:
     controller: App\Controller\DefaultController::viewObject
 
 objecten_toevoegen_data:
-    path: /adddummyobjects
-    controller: App\Controller\AdminController::test
-
-objecten_toevoegen_data:
-    path: /adddummyobjects
+    path: /addobjects
     controller: App\Controller\AdminController::test
 
 admin_optionstest:
-    path: /adddummuyoptions
+    path: /addoptions
     controller: App\Controller\AdminController::Optionstest
 
 logout:
@@ -104,6 +100,10 @@ user_order_success:
 user_overview_orders:
     path: /klant/bestellingen/overview
     controller: App\Controller\UserController::overviewOrder
+
+user_disable_account:
+    path: /klant/gegevens/account-uitschakelen
+    controller: App\Controller\UserController::disableUser
 
 # Routing voor admin-gedeelte voor beheerders (USER_ADMIN)
 admin_add_object:

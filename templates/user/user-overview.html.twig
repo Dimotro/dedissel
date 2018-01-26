@@ -57,6 +57,12 @@
                             </table>
                         </div>
                     </div>
+                    <h4 style="font-family: europa; text-align: center;">Activeren contact opnemen beheerder vereist:</h4>
+                    <a href="{{ path('user_disable_account', {'id': 'x'}) }}">
+                        <button class="btn btn-primary default-button-wide">
+                            <i class="fas fa-lock"></i> Account deactiveren
+                        </button>
+                    </a>
                 </div>
                 <div class="col-md-6">
                     {% if rijbewijs %}
@@ -100,7 +106,7 @@
                         </div>
                     </div>
                     {% endif %}
-                    <div style="padding: 30px; background-color: #BA5359;border-radius: 30px; margin-top: 30px;">
+                    <div style="padding: 30px; background-color: #BA5359;border-radius: 30px; margin-top: 30px; margin-bottom: 30px;">
                         <h2 style="font-family: europa; color: white; margin-top: 0; margin-bottom: 20px;">Account-instellingen
                             <a href="{{ path('user_edit_credentials') }}">
                                 <div class="btn btn-primary" style="border-radius: 30px; float: right;">
