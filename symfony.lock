@@ -53,6 +53,9 @@
     "doctrine/lexer": {
         "version": "v1.0.1"
     },
+    "doctrine/migrations": {
+        "version": "v1.6.2"
+    },
     "doctrine/orm": {
         "version": "v2.6.0"
     },
@@ -76,6 +79,9 @@
     },
     "monolog/monolog": {
         "version": "1.23.0"
+    },
+    "ocramius/proxy-manager": {
+        "version": "2.1.1"
     },
     "psr/cache": {
         "version": "1.0.1"
@@ -346,5 +352,11 @@
     },
     "twig/twig": {
         "version": "v2.4.4"
+    },
+    "zendframework/zend-code": {
+        "version": "3.3.0"
+    },
+    "zendframework/zend-eventmanager": {
+        "version": "3.2.0"
     }
 }
