@@ -20,7 +20,7 @@ class AddOrderType extends AbstractType
     {
         $builder
             ->add('klant', AddOrderKlantAccountType::class)
-            ->add('objectProduct', EditObjectDateType::class);
+            ->add('objectPeriod', EditObjectDateType::class);
     }
     public function configureOptions(OptionsResolver $resolver)
     {

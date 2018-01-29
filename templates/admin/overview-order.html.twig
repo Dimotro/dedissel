@@ -4,14 +4,7 @@
     <div id="content">
         <div class="content-box container">
             <div class="row">
-                <h2 class="col-md-6" style="font-family: europa;">Opties overzicht</h2>
-                <div class="col-md-6" style="display: flex; justify-content: flex-end; align-items: center; height: 80px;">
-                    <a href="{{ path('admin_add_option') }}">
-                        <div class="btn btn-primary" style="font-family: proxima-nova;">
-                            <i class="fas fa-plus-square"></i> Nieuwe optie
-                        </div>
-                    </a>
-                </div>
+                <h2 class="col-md-6" style="font-family: europa;">Orders overzicht</h2>
             </div>
             {% if error is defined %}
                 {{ error }}
@@ -19,48 +12,23 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th scope="col">Titel</th>
-                    <th scope="col">Datum uit</th>
-                    <th scope="col">Datum terug</th>
-                    <th scope="col">Beschikbaar</th>
-                    <th scope="col">Prijs</th>
-                    <th scope="col">Foto's</th>
-                    <th scope="col">Acties</th>
+                    <th scope="col">Ordernummer</th>
+                    <th scope="col">Orderdatum</th>
+                    <th scope="col">Klant</th>
+                    <th scope="col">Object</th>
+                    <th scope="col">Van</th>
+                    <th scope="col">Tot</th>
                 </tr>
                 </thead>
                 <tbody>
-                {% for option in options %}
+                {% for order in orders %}
                     <tr>
-                        <th scope="row">{{ option.optieTitel }}</th>
-                        <td>
-                            {% if option.optieDatumUit is not empty %}
-                                {{ option.optieDatumUit|date("d/m/Y", false) }}
-                            {% else %}
-                                Niet beschikbaar
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% if option.optieDatumTerug is not empty %}
-                                {{ option.optieDatumTerug|date("d/m/Y", false) }}
-                            {% else %}
-                                Niet beschikbaar
-                            {% endif %}
-                        </td>
-                        <td>{{ option.beschikbaarheid ? '<i class="fas fa-check" style="color: #52af52;"></i>' : '<i class="fas fa-times"></i>' }}</td>
-                        <td>€ {{ option.optiePrijs }}</td>
-                        <td>
-                            {% if option.fotos %}
-                                <img style="max-width: 120px;" src="/uploads/images/{{ option.fotos[0] }}" alt="">
-                            {% endif %}
-                        </td>
-                        <td>
-                            <a href="{{ path('admin_edit_option', {'id': option.id }) }}" style="margin-right: 15px;">
-                                <i class="fas fa-edit"></i> Bewerken
-                            </a>
-                            <a href="{{ path('admin_delete_option', {'id': option.id }) }}">
-                                <i class="fas fa-trash-alt"></i> Verwijderen
-                            </a>
-                        </td>
+                        <th>{{ order.ordernummer }}</th>
+                        <td>{{ order.orderDatum|date('d-m-Y') }}</td>
+                        <td>{{ order.klant.klantPersoonlijkeGegevens.klantVoornaam }} {{ order.klant.klantPersoonlijkeGegevens.klantTussenvoegsel }} {{ order.klant.klantPersoonlijkeGegevens.klantAchternaam }}</td>
+                        <td>{{ order.objectPeriod.objectProduct.objNaam }}</td>
+                        <td>{{ order.objectPeriod.datumUit|date('d-m-Y')}}</td>
+                        <td>{{ order.objectPeriod.datumTerug|date('d-m-Y') }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>

@@ -14,6 +14,7 @@ use App\Entity\Klantadres;
 use App\Entity\Klantgegeven;
 use App\Entity\KlantOrder;
 use App\Entity\ObjectProduct;
+use App\Entity\ObjectProductPeriod;
 use App\Entity\Rijbewijs;
 use App\Form\AddObjectType;
 use App\Form\AddOrderType;
@@ -24,6 +25,7 @@ use App\Form\EditObjectDateType;
 use App\Form\OrderDetailsType;
 use App\Form\RijbewijsType;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Criteria;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -152,7 +154,7 @@ class UserController extends Controller
         ));
     }
 
-    public function orderSuccess($objectId, $optionsArr)
+    public function orderSuccess()
     {
         return $this->render('user/order-success.html.twig');
     }
@@ -161,18 +163,20 @@ class UserController extends Controller
     {
         $user = $this->getDoctrine()->getRepository(Klantaccount::class)->find($user);
         $discount = $this->getDoctrine()->getRepository(ActiePeriode::class)->getCurrentDiscount();
-        $prijsArr = [];
-        $bestellingen = $user->getBestellings();
-        foreach ($bestellingen as $key => $order) {
-            $object = $order->getObjectProduct();
-            $date1 = $object->getObjDatumUit();
-            $date2 = $object->getObjDatumTerug();
-            $difference = $date1->diff($date2)->days;
-            $prijs = $object->getPrijs();
-            $totalPrice = 0;
 
-            if ($discount){
-                $discountDay = $discount->getActiePercentage();
+        $bestellingen = $user->getBestellings();
+        $prijsArr = array();
+
+        foreach ($bestellingen as $key => $order) {
+            $object = $order->getObjectPeriod()->getObjectProduct();
+            $objectPrijs = $object->getPrijs();
+            $datumUit = $order->getObjectPeriod()->getDatumUit();
+            $datumTerug = $order->getObjectPeriod()->getDatumTerug();
+            $difference = $datumUit->diff($datumTerug)->days;
+            $prijs = $object->getPrijs();
+
+            if ($discount && $order->getObjectPeriod()->getDatumUit() > $discount[0]->getActiePeriodeStart() && $order->getObjectPeriod()->getDatumTerug() < $discount[0]->getActiePeriodeEinde() ){
+                $discountDay = $discount[0]->getActiePercentage();
                 $totalPrice = ($prijs * $discountDay) * $difference;
             } else {
                 $totalPrice = $difference * $prijs;
@@ -198,12 +202,45 @@ class UserController extends Controller
 
         $order = new KlantOrder();
         $order->setKlant($user);
-        $order->setObjectProduct($object);
+        $order->setOrdernummer(random_int(1, 900000000));
+        $orderPeriod = new ObjectProductPeriod();
+        $orderPeriod->setKlantOrder($order);
+        $orderPeriod->setObjectProduct($object);
+        $order->setObjectPeriod($orderPeriod);
 
         $orderForm = $this->createForm(AddOrderType::class, $order);
         $orderForm->handleRequest($request);
 
         if ($orderForm->isSubmitted() && $orderForm->isValid()) {
+            $periodValid = $this->getDoctrine()->getRepository(ObjectProductPeriod::class)->isAvailibleAt($objectId, $orderPeriod->getDatumUit(), $orderPeriod->getDatumTerug());
+            if(!$periodValid){
+                $this->addFlash('error', 'Object is al gereserveerd in dit tijdvlak');
+
+                return $this->render('user/new-order.html.twig', array(
+                        'object' => $order->getObjectPeriod()->getObjectProduct(),
+                        'klantaccount' => $user,
+                        'kortingMultiplier' => $kortingMultiplier,
+                        'orderForm' => $orderForm->createView()
+                    )
+                );
+            }
+            $rijbewijsBenodigd = $object->getSpecificatie()->getRijbewijsBenodigd();
+            $rijbewijsArr = explode(',', $rijbewijsBenodigd);
+            foreach ($rijbewijsArr as $key => $value){
+                $klantHasRijbewijs = $user->getKlantPersoonlijkeGegevens()->getRijbewijs()->getRijbewijsType()[$value];
+                if($klantHasRijbewijs){
+                    $rijbewijsArr[$key] = true;
+                } else{
+                    $rijbewijsArr[$key] = false;
+                }
+            }
+            foreach($rijbewijsArr as $type){
+                if(!$type){
+                    $this->addFlash('error', 'Uw bezit een van de benodigde rijbewijzen niet');
+                    $this->redirectToRoute('user_add_order', array('objectId' => $object->getId()));
+                }
+            }
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($order);
             $em->flush();
@@ -211,7 +248,7 @@ class UserController extends Controller
         }
 
         return $this->render('user/new-order.html.twig', array(
-                'object' => $order->getObjectProduct(),
+                'object' => $order->getObjectPeriod()->getObjectProduct(),
                 'klantaccount' => $user,
                 'kortingMultiplier' => $kortingMultiplier,
                 'orderForm' => $orderForm->createView()
@@ -238,5 +275,20 @@ class UserController extends Controller
 
     public function addOrderWithOptions($optionsArr){
 
+    }
+
+    public function deleteOrder($order)
+    {
+        $order = $this->getDoctrine()->getRepository(KlantOrder::class)->find($order);
+        $em = $this->getDoctrine()->getManager();
+        if ( $order->getOrderDatum()->diff(new \DateTime('now'))->days > 61 ){
+               $em->remove($order);
+               $em->flush();
+               $this->addFlash('success', 'Uw order is succesvol verwijderd');
+               return $this->redirectToRoute('user_overview_orders');
+        } else{
+            $this->addFlash('error', 'Alleen orders die 2 maanden geleden of langer geplaatst zijn kunnen worden verwijderd');
+            return $this->redirectToRoute('user_overview_orders');
+        }
     }
 }

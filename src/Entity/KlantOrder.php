@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -17,9 +18,21 @@ class KlantOrder
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Klantaccount", inversedBy="bestellings", cascade={"all"})
+     * @ORM\ManyToOne(targetEntity="Klantaccount", inversedBy="bestellings")
      */
     private $klant;
+
+    /**
+     * @ORM\OneToOne(targetEntity="ObjectProductPeriod", inversedBy="klantOrder", cascade={"all"})
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
+     */
+    private $objectPeriod;
+
+    /**
+     * @ORM\OneToMany(targetEntity="OptionProductPeriod", mappedBy="klantOrder", cascade={"all"})
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
+     */
+    private $optionPeriods;
 
     /**
      * @ORM\Column(type="integer")
@@ -31,21 +44,11 @@ class KlantOrder
      */
     private $orderDatum;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\ObjectProduct", inversedBy="klantOrder", cascade={"all"})
-     */
-    private $objectProduct;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\OptieProduct", inversedBy="", cascade={"all"})
-     * @ORM\Column(nullable=true)
-     */
-    private $optieProducten;
-
     public function __construct()
     {
         $this->orderDatum = new \DateTime('now');
         $this->ordernummer = random_int(1, 15);
+        $this->optionPeriods = new ArrayCollection();
     }
 
     /**
@@ -115,17 +118,34 @@ class KlantOrder
     /**
      * @return mixed
      */
-    public function getObjectProduct()
+    public function getObjectPeriod()
     {
-        return $this->objectProduct;
+        return $this->objectPeriod;
     }
 
     /**
-     * @param mixed $objectProduct
+     * @param mixed $objectPeriod
      */
-    public function setObjectProduct($objectProduct)
+    public function setObjectPeriod($objectPeriod): void
     {
-        $this->objectProduct = $objectProduct;
+        $this->objectPeriod = $objectPeriod;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getOptionPeriods()
+    {
+        return $this->optionPeriods;
+    }
+
+    public function addOptionPeriod(OptionProductPeriod $period){
+        $this->optionPeriods[] = $period;
+        $period->setKlantOrder($this);
+        return $this;
+    }
+
+    public function removeOptionPeriod(OptionProductPeriod $period){
+        $this->optionPeriods->removeElement($period);
+    }
 }

@@ -37,7 +37,8 @@ class AddOrderKlantGegevensType extends AbstractType
                 'label' => 'Tussenvoegsel',
                 'attr' => array(
                     'class' => 'form-control'
-                )
+                ),
+                'required' => false
             ))
             ->add('klantAchternaam', TextType::class, array(
                 'label' => 'Achternaam',

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,28 +37,19 @@ class OptieProduct
     private $fotos;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $optieDatumUit;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $optieDatumTerug;
-
-    /**
      * @ORM\Column(type="string")
      */
     private $beschikbaarheid;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\KlantOrder", inversedBy="optieProducten", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="OptionProductPeriod", mappedBy="optionProduct", cascade={"all"})
      */
-    private $klantOrder;
+    private $orderPeriods;
 
     public function __construct()
     {
         $this->beschikbaarheid = true;
+        $this->orderPeriods = new ArrayCollection();
     }
 
     /**
@@ -194,5 +186,24 @@ class OptieProduct
     public function setFotos($fotos): void
     {
         $this->fotos = $fotos;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOrderPeriods()
+    {
+        return $this->orderPeriods;
+    }
+
+    public function addOrderPeriod(OptionProductPeriod $date)
+    {
+        $this->orderPeriods[] = $date;
+        $date->setOptionProduct($this);
+        return $this;
+    }
+
+    public function removeOrderPeriod(OptionProductPeriod $date){
+        $this->orderPeriods->removeElement($date);
     }
 }

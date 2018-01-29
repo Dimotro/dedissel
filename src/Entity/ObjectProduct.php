@@ -18,14 +18,14 @@ class ObjectProduct
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\KlantOrder", mappedBy="objectProduct", cascade={"all"})
-     */
-    private $klantOrder;
-
-    /**
      * @ORM\OneToOne(targetEntity="App\Entity\Specificatie", inversedBy="object", cascade={"all"})
      */
     private $specificatie;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ObjectProductPeriod", mappedBy="objectProduct", cascade={"all"})
+     */
+    private $orderPeriods;
 
     /**
      * @ORM\Column(type="string")
@@ -36,7 +36,6 @@ class ObjectProduct
      * @ORM\Column(type="string")
      */
     private $kenteken;
-
 
     /**
      * @ORM\Column(type="string")
@@ -52,16 +51,6 @@ class ObjectProduct
      * @ORM\Column(type="boolean")
      */
     private $beschikbaarheid;
-
-    /**
-     * @ORM\Column(type="datetime",nullable=true)
-     */
-    private $objDatumUit;
-
-    /**
-     * @ORM\Column(type="datetime",nullable=true)
-     */
-    private $objDatumTerug;
 
 
     /**
@@ -82,8 +71,8 @@ class ObjectProduct
 
     public function __construct()
     {
-        $this->setObjDatumTerug(new \DateTime('now - 2 years'));
-        $this->setObjDatumUit(new \DateTime('now - 2 years'));
+        $this->orderPeriods = new ArrayCollection();
+        $this->beschikbaarheid = true;
     }
 
     /**
@@ -148,38 +137,6 @@ class ObjectProduct
     public function setObjType($objType)
     {
         $this->objType = $objType;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getObjDatumUit()
-    {
-        return $this->objDatumUit;
-    }
-
-    /**
-     * @param mixed $objDatumUit
-     */
-    public function setObjDatumUit($objDatumUit)
-    {
-        $this->objDatumUit = $objDatumUit;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getObjDatumTerug()
-    {
-        return $this->objDatumTerug;
-    }
-
-    /**
-     * @param mixed $objDatumTerug
-     */
-    public function setObjDatumTerug($objDatumTerug)
-    {
-        $this->objDatumTerug = $objDatumTerug;
     }
 
     /**
@@ -281,8 +238,20 @@ class ObjectProduct
     /**
      * @return mixed
      */
-    public function getKlantOrder()
+    public function getOrderPeriods()
     {
-        return $this->klantOrder;
+        return $this->orderPeriods;
+    }
+
+    public function addOrderPeriod(ObjectProductPeriod $period)
+    {
+        $this->orderPeriods[] = $period;
+        $period->setObjectProduct($this);
+        return $this;
+    }
+
+    public function removeOrderPeriod(ObjectProductPeriod $period)
+    {
+        $this->orderPeriods->removeElement($period);
     }
 }

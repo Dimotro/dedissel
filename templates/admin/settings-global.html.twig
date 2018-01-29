@@ -34,7 +34,7 @@
                     <td>{{ discount.actiePeriodeEinde|date("d/m/Y") }}</td>
                     <td>{{ (discount.actiePercentage * 100) }}%</td>
                     <td>
-                        <a href="{{ path('admin_edit_discount', { 'id': discount.id }) }}" style="text-decoration: none;">
+                        <a href="{{ path('admin_edit_discount', { 'discount': discount.id }) }}" style="text-decoration: none;">
                             <i class="fas fa-edit"></i> Bewerken
                         </a>
                         <a href="{{ path('admin_delete_discount', { 'id': discount.id }) }}" style="text-decoration: none;">

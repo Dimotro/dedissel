@@ -64,7 +64,7 @@ class Klantaccount implements UserInterface, \Serializable
     private $isVerified;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\KlantOrder", mappedBy="klant", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="App\Entity\KlantOrder", mappedBy="klant")
      */
     private $bestellings;
 

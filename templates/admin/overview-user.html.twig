@@ -15,6 +15,11 @@
                     {#<input type="submit" value="Zoeken" class="btn btn-primary">#}
                 {#</form>#}
             </div>
+            {% for message in app.flashes('error') %}
+                <div class="flash-notice" style="float:right; line-height: 30px; background-color: #e3656c; border-radius: 30px; padding: 0 15px; color: white; font-family: proxima-nova;">
+                    <i class="fas fa-exclamation-triangle"></i> {{ message }}
+                </div>
+            {% endfor %}
             <table class="table">
                 <thead>
                 <tr>

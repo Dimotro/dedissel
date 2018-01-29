@@ -4,9 +4,14 @@ namespace App\Controller;
 
 use App\Entity\ActiePeriode;
 use App\Entity\Klantaccount;
+use App\Entity\Klantadres;
+use App\Entity\Klantgegeven;
 use App\Entity\KlantOrder;
 use App\Entity\ObjectProduct;
+use App\Entity\ObjectProductPeriod;
 use App\Entity\OptieProduct;
+use App\Entity\OptionProductPeriod;
+use App\Entity\Rijbewijs;
 use App\Entity\Specificatie;
 use App\Form\ActiePeriodeType;
 use App\Form\AddObjectType;
@@ -16,6 +21,7 @@ use App\Form\OptieType;
 use App\Form\SpecificatieType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 // De AdminController is bedoeld voor alle routes die beschikbaar moeten zijn voor beheerder-gebruikers
 class AdminController extends Controller
@@ -61,316 +67,6 @@ class AdminController extends Controller
         return $this->render('admin/add-object.html.twig', array(
             'form' => $objectForm->createView()
         ));
-    }
-
-    public function test()
-    {
-        $object1 = new ObjectProduct();
-        $object1->setBeschikbaarheid(true);
-        $object1->setObjOmschrijving(" ");
-        $object1->setChassisnummer("7DR239047111147");
-        $object1->setFotos(array());
-        $object1->setKenteken("WP-12-AS");
-        $object1->setObjDatumTerug(new \DateTime('2017-01-28'));
-        $object1->setObjDatumUit(new \DateTime("2017-01-25"));
-        $object1->setObjNaam("Caravan 1");
-        $object1->setObjType("Caravan");
-        $object1->setPrijs(60);
-
-        $specificatie1 = new Specificatie();
-        $specificatie1->setMerk("Hobby");
-        $specificatie1->setType("495 UL");
-        $specificatie1->setBouwjaar(2017);
-        $specificatie1->setMassaInventaris(1350);
-        $specificatie1->setMassaMax(1550);
-        $specificatie1->setLengteTot(713);
-        $specificatie1->setLengteOpbouw(595);
-        $specificatie1->setHoogte(262);
-        $specificatie1->setRijbewijsBenodigd("BE");
-        $object1->setSpecificatie($specificatie1);
-
-        //2e row
-        $object2 = new ObjectProduct();
-        $object2->setBeschikbaarheid(true);
-        $object2->setObjOmschrijving(" ");
-        $object2->setChassisnummer("7DR239047112292");
-        $object2->setFotos(array());
-        $object2->setKenteken("WD-55-TG");
-        $object2->setObjDatumTerug(new \DateTime('2017-01-28'));
-        $object2->setObjDatumUit(new \DateTime("2017-01-25"));
-        $object2->setObjNaam("Caravan 1");
-        $object2->setObjType("Caravan");
-        $object2->setPrijs(50);
-
-        $specificatie2 = new Specificatie();
-        $specificatie2->setMerk("Hobby");
-        $specificatie2->setType("495 UL");
-        $specificatie2->setBouwjaar(2015);
-        $specificatie2->setMassaInventaris(1350);
-        $specificatie2->setMassaMax(1500);
-        $specificatie2->setLengteTot(713);
-        $specificatie2->setLengteOpbouw(595);
-        $specificatie2->setHoogte(262);
-        $specificatie2->setRijbewijsBenodigd("BE");
-
-        $object2->setSpecificatie($specificatie2);
-
-        //3e row
-        $object3 = new ObjectProduct();
-        $object3->setBeschikbaarheid(true);
-        $object3->setObjOmschrijving(" ");
-        $object3->setChassisnummer("7DR239047233162");
-        $object3->setFotos(array());
-        $object3->setKenteken("WL-23-SD");
-        $object3->setObjDatumTerug(new \DateTime('2017-01-28'));
-        $object3->setObjDatumUit(new \DateTime("2017-01-25"));
-        $object3->setObjNaam("Caravan 1");
-        $object3->setObjType("Caravan");
-        $object3->setPrijs(40);
-
-        $specificatie3 = new Specificatie();
-        $specificatie3->setMerk("Hobby");
-        $specificatie3->setType("460 LU");
-        $specificatie3->setBouwjaar(2013);
-        $specificatie3->setMassaInventaris(1100);
-        $specificatie3->setMassaMax(1350);
-        $specificatie3->setLengteTot(661);
-        $specificatie3->setLengteOpbouw(550);
-        $specificatie3->setHoogte(260);
-        $specificatie3->setRijbewijsBenodigd("BE");
-
-        $object3->setSpecificatie($specificatie3);
-
-
-        //van hier nog invullen van data
-        //4e row
-        $object4 = new ObjectProduct();
-        $object4->setBeschikbaarheid(true);
-        $object4->setObjOmschrijving(" ");
-        $object4->setChassisnummer("7DR239047119811");
-        $object4->setFotos(array());
-        $object4->setKenteken("WG-13-BM");
-        $object4->setObjDatumTerug(new \DateTime('2017-01-28'));
-        $object4->setObjDatumUit(new \DateTime("2017-01-25"));
-        $object4->setObjNaam("Caravan 1");
-        $object4->setObjType("Caravan");
-        $object4->setPrijs(60);
-
-        $specificatie4 = new Specificatie();
-        $specificatie4->setMerk("Hobby");
-        $specificatie4->setType("495 UL");
-        $specificatie4->setBouwjaar(2018);
-        $specificatie4->setMassaInventaris(1350);
-        $specificatie4->setMassaMax(1550);
-        $specificatie4->setLengteTot(713);
-        $specificatie4->setLengteOpbouw(595);
-        $specificatie4->setHoogte(260);
-        $specificatie4->setRijbewijsBenodigd("BE");
-
-        $object4->setSpecificatie($specificatie4);
-
-
-        //5e row
-        $object5 = new ObjectProduct();
-        $object5->setBeschikbaarheid(true);
-        $object5->setObjOmschrijving(" ");
-        $object5->setChassisnummer("7DR239047511206");
-        $object5->setFotos(array());
-        $object5->setKenteken("WG-38-TY");
-        $object5->setObjDatumTerug(new \DateTime('2017-01-28'));
-        $object5->setObjDatumUit(new \DateTime("2017-01-25"));
-        $object5->setObjNaam("Caravan 1");
-        $object5->setObjType("Caravan");
-        $object5->setPrijs(40);
-
-        $specificatie5 = new Specificatie();
-        $specificatie5->setMerk("Hobby");
-        $specificatie5->setType("460 LU");
-        $specificatie5->setBouwjaar(2013);
-        $specificatie5->setMassaInventaris(1250);
-        $specificatie5->setMassaMax(1350);
-        $specificatie5->setLengteTot(661);
-        $specificatie5->setLengteOpbouw(550);
-        $specificatie5->setHoogte(260);
-        $specificatie5->setRijbewijsBenodigd("BE");
-
-        $object5->setSpecificatie($specificatie5);
-
-
-        //6e row
-        $object6 = new ObjectProduct();
-        $object6->setBeschikbaarheid(true);
-        $object6->setObjOmschrijving(" ");
-        $object6->setChassisnummer("7DR239047114003");
-        $object6->setFotos(array());
-        $object6->setKenteken("WX-75-22");
-        $object6->setObjDatumTerug(new \DateTime('2017-01-28'));
-        $object6->setObjDatumUit(new \DateTime("2017-01-25"));
-        $object6->setObjNaam("Caravan 1");
-        $object6->setObjType("Caravan");
-        $object6->setPrijs(40);
-
-        $specificatie6 = new Specificatie();
-        $specificatie6->setMerk("Hobby");
-        $specificatie6->setType("460 LU");
-        $specificatie6->setBouwjaar(2013);
-        $specificatie6->setMassaInventaris(1250);
-        $specificatie6->setMassaMax(1350);
-        $specificatie6->setLengteTot(661);
-        $specificatie6->setLengteOpbouw(550);
-        $specificatie6->setHoogte(260);
-        $specificatie6->setRijbewijsBenodigd("BE");
-
-        $object6->setSpecificatie($specificatie6);
-
-
-        //7e row
-        $object7 = new ObjectProduct();
-        $object7->setBeschikbaarheid(true);
-        $object7->setObjOmschrijving(" ");
-        $object7->setChassisnummer("7BMDF239047114003");
-        $object7->setFotos(array());
-        $object7->setKenteken("BC-113-P");
-        $object7->setObjDatumTerug(new \DateTime('2017-01-28'));
-        $object7->setObjDatumUit(new \DateTime("2017-01-25"));
-        $object7->setObjNaam("Caravan 1");
-        $object7->setObjType("Camper");
-        $object7->setPrijs(100);
-
-        $specificatie7 = new Specificatie();
-        $specificatie7->setMerk("Optima");
-        $specificatie7->setType("V60GF");
-        $specificatie7->setBouwjaar(2015);
-        $specificatie7->setMassaInventaris(2900);
-        $specificatie7->setMassaMax(3500);
-        $specificatie7->setLengteTot(600);
-        $specificatie7->setLengteOpbouw(430);
-        $specificatie7->setHoogte(270);
-        $specificatie7->setRijbewijsBenodigd("BE");
-
-        $object7->setSpecificatie($specificatie7);
-
-
-        //8e row
-        $object8 = new ObjectProduct();
-        $object8->setBeschikbaarheid(true);
-        $object8->setObjOmschrijving(" ");
-        $object8->setChassisnummer("7BMDF239042148800");
-        $object8->setFotos(array());
-        $object8->setKenteken("BD-287-T");
-        $object8->setObjDatumTerug(new \DateTime('2017-01-28'));
-        $object8->setObjDatumUit(new \DateTime("2017-01-25"));
-        $object8->setObjNaam("Caravan 1");
-        $object8->setObjType("Camper");
-        $object8->setPrijs(115);
-
-        $specificatie8 = new Specificatie();
-        $specificatie8->setMerk("Optima");
-        $specificatie8->setType("V60GF");
-        $specificatie8->setBouwjaar(2017);
-        $specificatie8->setMassaInventaris(2900);
-        $specificatie8->setMassaMax(3500);
-        $specificatie8->setLengteTot(600);
-        $specificatie8->setLengteOpbouw(430);
-        $specificatie8->setHoogte(270);
-        $specificatie8->setRijbewijsBenodigd("B");
-
-        $object8->setSpecificatie($specificatie8);
-
-
-
-        //row 9
-        $object9 = new ObjectProduct();
-        $object9->setBeschikbaarheid(true);
-        $object9->setObjOmschrijving(" ");
-        $object9->setChassisnummer("7BMDG239047112297");
-        $object9->setFotos(array());
-        $object9->setKenteken("DV-441-K");
-        $object9->setObjDatumTerug(new \DateTime('2017-01-28'));
-        $object9->setObjDatumUit(new \DateTime("2017-01-25"));
-        $object9->setObjNaam("Caravan 1");
-        $object9->setObjType("Camper");
-        $object9->setPrijs(115);
-
-        $specificatie9 = new Specificatie();
-        $specificatie9->setMerk("Optima");
-        $specificatie9->setType("T70E");
-        $specificatie9->setBouwjaar(2015);
-        $specificatie9->setMassaInventaris(2900);
-        $specificatie9->setMassaMax(1350);
-        $specificatie9->setLengteTot(738);
-        $specificatie9->setLengteOpbouw(510);
-        $specificatie9->setHoogte(270);
-        $specificatie9->setRijbewijsBenodigd("B");
-
-        $object9->setSpecificatie($specificatie9);
-
-
-        //row 10
-        $object10 = new ObjectProduct();
-        $object10->setBeschikbaarheid(true);
-        $object10->setObjOmschrijving(" ");
-        $object10->setChassisnummer("7BMDFH23904737121");
-        $object10->setFotos(array());
-        $object10->setKenteken("DD-419-L");
-        $object10->setObjDatumTerug(new \DateTime('2017-01-28'));
-        $object10->setObjDatumUit(new \DateTime("2017-01-25"));
-        $object10->setObjNaam("Caravan 1");
-        $object10->setObjType("Camper");
-        $object10->setPrijs(115);
-
-        $specificatie10 = new Specificatie();
-        $specificatie10->setMerk("Optima");
-        $specificatie10->setType("T70E");
-        $specificatie10->setBouwjaar(2018);
-        $specificatie10->setMassaInventaris(2900);
-        $specificatie10->setMassaMax(1350);
-        $specificatie10->setLengteTot(738);
-        $specificatie10->setLengteOpbouw(510);
-        $specificatie10->setHoogte(270);
-        $specificatie10->setRijbewijsBenodigd("B");
-
-        $object10->setSpecificatie($specificatie10);
-
-        //row 11
-        $object11 = new ObjectProduct();
-        $object11->setBeschikbaarheid(true);
-        $object11->setObjOmschrijving(" ");
-        $object11->setChassisnummer("7BMDK239067822023");
-        $object11->setFotos(array());
-        $object11->setKenteken("DZ-712-R");
-        $object11->setObjDatumTerug(new \DateTime('2017-01-28'));
-        $object11->setObjDatumUit(new \DateTime("2017-01-25"));
-        $object11->setObjNaam("Caravan 1");
-        $object11->setObjType("Camper");
-        $object11->setPrijs(115);
-
-        $specificatie11 = new Specificatie();
-        $specificatie11->setMerk("Optima");
-        $specificatie11->setType("A65GM");
-        $specificatie11->setBouwjaar(2016);
-        $specificatie11->setMassaInventaris(3000);
-        $specificatie11->setMassaMax(3650);
-        $specificatie11->setLengteTot(649);
-        $specificatie11->setLengteOpbouw(520);
-        $specificatie11->setHoogte(277);
-        $specificatie11->setRijbewijsBenodigd("CE");
-
-        $object11->setSpecificatie($specificatie11);
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($object1);
-        $em->persist($object2);
-        $em->persist($object3);
-        $em->persist($object4);
-        $em->persist($object5);
-        $em->persist($object6);
-        $em->persist($object7);
-        $em->persist($object8);
-        $em->persist($object9);
-        $em->persist($object10);
-        $em->persist($object11);
-        $em->flush();
     }
 
     // Controller voor toevoegen van opties
@@ -469,6 +165,11 @@ class AdminController extends Controller
     public function deleteUser($id)
     {
         $user = $this->getDoctrine()->getRepository(Klantaccount::class)->find($id);
+        $bestellingen = $user->getBestellings();
+        if ($bestellingen) {
+            $this->addFlash('error', 'Gebruiker kon niet verwijderd worden omdat de gebruiker nog orders heeft');
+            return $this->redirectToRoute('admin_overview_user');
+        }
         $em = $this->getDoctrine()->getManager();
         $em->remove($user);
         $em->flush();
@@ -494,9 +195,21 @@ class AdminController extends Controller
         return $this->redirectToRoute('admin_overview_user');
     }
 
-    public function editDiscount()
+    public function editDiscount($discount, Request $request)
     {
-        // Todo
+        $discount = $this->getDoctrine()->getRepository(ActiePeriode::class)->find($discount);
+        $form = $this->createForm(ActiePeriodeType::class, $discount);
+
+        $form->handleRequest($request);
+        if ( $form->isSubmitted() && $form->isValid() ) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($discount);
+            $em->flush();
+            return $this->redirectToRoute('admin_config');
+        }
+        return $this->render('admin/settings-edit-discount.html.twig', array(
+            'form' => $form->createView()
+        ));
     }
 
     // Controller voor aanpassingen van objecten
@@ -644,6 +357,14 @@ class AdminController extends Controller
         ));
     }
 
+    public function overviewOrders()
+    {
+        $orders = $this->getDoctrine()->getRepository(KlantOrder::class)->findAll();
+        return $this->render('admin/overview-order.html.twig', array(
+            'orders' => $orders
+        ));
+    }
+
     // Controller voor overzicht van klanten/gebruikers
     public function overviewUser()
     {
@@ -651,11 +372,6 @@ class AdminController extends Controller
         $users = $this->getDoctrine()->getManager()
             // Geeft aan welke Repository als basis gebruikt wordt en haalt alle records uit die entity en haalt maximaal 10 gebruikers op
             ->getRepository(Klantaccount::class)->findBy(array(), array(), 10);
-//        $userOrders = $this->getDoctrine()->getRepository(Klantaccount::class)->findBy(array(
-//            'bestellings' >= 1
-//        ));
-//        var_dump($userOrders);
-//        exit();
         $userOrderArr = array();
         foreach ($users as $key => $user) {
             if ($user->getBestellings()) {
@@ -723,83 +439,5 @@ class AdminController extends Controller
         return $this->render('admin/settings-add-discount.html.twig', array(
             'form' => $form->createView()
         ));
-    }
-
-    public function Optionstest()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $optie0 = new OptieProduct();
-        $optie0->setOptieTitel('Voortent');
-        $optie0->setOptieOmschrijving('Mooie voortent');
-        $optie0->setOptiePrijs('100');
-
-
-        $optie1 = new OptieProduct();
-        $optie1->setOptieTitel('Bijzettent');
-        $optie1->setOptieOmschrijving('Mooie bijzettent');
-        $optie1->setOptiePrijs('75');
-
-
-        $optie2 = new OptieProduct();
-        $optie2->setOptieTitel('Windscherm');
-        $optie2->setOptieOmschrijving('Mooie windscherm');
-        $optie2->setOptiePrijs('20');
-
-
-        $optie3 = new OptieProduct();
-        $optie3->setOptieTitel('Barbecue');
-        $optie3->setOptieOmschrijving('Mooie barbecue');
-        $optie3->setOptiePrijs('30');
-
-
-        $optie4 = new OptieProduct();
-        $optie4->setOptieTitel('Skottelbraai');
-        $optie4->setOptieOmschrijving('Mooie skottelbraai');
-        $optie4->setOptiePrijs('50');
-
-
-        $optie5 = new OptieProduct();
-        $optie5->setOptieTitel('Televiesietoestel, schotelantenne en abonnement');
-        $optie5->setOptieOmschrijving('Mooie televisietoestel, schotelantenne en abonnement');
-        $optie5->setOptiePrijs('90');
-
-
-        $optie6 = new OptieProduct();
-        $optie6->setOptieTitel('Uitbreidingsset servies en bestek');
-        $optie6->setOptieOmschrijving('Mooie uitbreidingsset servies en bestek');
-        $optie6->setOptiePrijs('5');
-
-
-        $optie7 = new OptieProduct();
-        $optie7->setOptieTitel('Annuleringsverzekering');
-        $optie7->setOptieOmschrijving('Een top annuleringsverzekering');
-        $optie7->setOptiePrijs('50');
-
-
-        $optie8 = new OptieProduct();
-        $optie8->setOptieTitel('Inboedelverzekering');
-        $optie8->setOptieOmschrijving('Een top inboedelverzekering');
-        $optie8->setOptiePrijs('40');
-
-
-        $optie9 = new OptieProduct();
-        $optie9->setOptieTitel('Verzekerng hagelschade');
-        $optie9->setOptieOmschrijving('Een top verzekering hagelschade');
-        $optie9->setOptiePrijs('50');
-
-
-        $em->persist($optie0);
-        $em->persist($optie1);
-        $em->persist($optie2);
-        $em->persist($optie3);
-        $em->persist($optie4);
-        $em->persist($optie5);
-        $em->persist($optie6);
-        $em->persist($optie7);
-        $em->persist($optie8);
-        $em->persist($optie9);
-
-        $em->flush();
     }
 }

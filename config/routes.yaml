@@ -51,18 +51,9 @@ view_object:
     path: /object/bekijk/{id}
     controller: App\Controller\DefaultController::viewObject
 
-objecten_toevoegen_data:
-    path: /addobjects
-    controller: App\Controller\AdminController::test
-
-admin_optionstest:
-    path: /addoptions
-    controller: App\Controller\AdminController::Optionstest
-
 logout:
     path: /logout
     # Deze route heeft geen controller nodig sinds Symfony intern deze gebruiker bij deze route uitlogt. Dit is aangegeven in config/packages/security.yaml
-
 
 # Routing voor het standaard klant-gebruiker (ROLE_USER)
 #user_view_order:
@@ -94,7 +85,7 @@ user_add_order_with_options:
     controller: App\Controller\UserController::addOrderWithOptions
 
 user_order_success:
-    path: /klant/bestellen/success
+    path: /klant/bestellinggeslaagd
     controller: App\Controller\UserController::orderSuccess
 
 user_overview_orders:
@@ -104,6 +95,10 @@ user_overview_orders:
 user_disable_account:
     path: /klant/gegevens/account-uitschakelen
     controller: App\Controller\UserController::disableUser
+
+user_delete_order:
+    path: /klant/bestelling/verwijderen/{order}
+    controller: App\Controller\UserController::deleteOrder
 
 # Routing voor admin-gedeelte voor beheerders (USER_ADMIN)
 admin_add_object:
@@ -159,7 +154,7 @@ admin_add_discount:
     controller: App\Controller\AdminController::addDiscount
 
 admin_edit_discount:
-    path: /admin/settings/editDiscount/{id}
+    path: /admin/settings/editDiscount/{discount}
     controller: App\Controller\AdminController::editDiscount
 
 admin_delete_discount:
@@ -173,3 +168,11 @@ admin_user_delete:
 admin_overview_user:
     path: /admin/user/overview
     controller: App\Controller\AdminController::overviewUser
+
+admin_overview_orders:
+    path: /admin/orders/overview
+    controller: App\Controller\AdminController::overviewOrders
+
+objecten_toevoegen_data:
+    path: /addtestdata
+    controller: App\Controller\DefaultController::testData

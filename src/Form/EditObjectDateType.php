@@ -10,6 +10,7 @@ namespace App\Form;
 
 
 use App\Entity\ObjectProduct;
+use App\Entity\ObjectProductPeriod;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,25 +21,25 @@ class EditObjectDateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('objDatumUit', DateType::class, array(
-                'label' => 'Datum afgifte',
+            ->add('datumUit', DateType::class, array(
+                'html5' => true,
+                'widget' => 'single_text',
                 'attr' => array(
-                    'class' => 'form-control datumUit',
-                ),
-                'widget' => 'single_text'
+                    'class' => 'form-control datumUit'
+                )
             ))
-            ->add('objDatumTerug', DateType::class ,array(
-                'label' => 'Datum inname',
+            ->add('datumTerug', DateType::class, array(
+                'html5' => true,
+                'widget' => 'single_text',
                 'attr' => array(
-                    'class' => 'form-control datumTerug',
-                ),
-                'widget' => 'single_text'
-            ));
+                    'class' => 'form-control datumTerug'
+            )
+        ));
     }
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => ObjectProduct::class
+            'data_class' => ObjectProductPeriod::class
         ));
     }
 }

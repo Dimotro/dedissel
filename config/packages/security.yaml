@@ -32,24 +32,48 @@ security:
 
     access_control:
         # Toegestane routes voor anonieme gebruikers
-        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/contact, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/overons, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/huidigaanbod, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/contact, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register/success, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/klant/wachtwoord-vergeten, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/klant/wachtwoord-vergeten/reset, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/klant/wachtwoord-resetten/success, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/klant/wachtwoord-resetten, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/klant/verifieer, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/object/bekijk, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 
         # Toegestane routes voor klant-accounts
-        - { path: ^/klant/orders/overzicht, roles: ROLE_USER }
-        - { path: ^/klant/orders/, roles: ROLE_USER }
         - { path: ^/klant/gegevens/overzicht, roles: ROLE_USER }
         - { path: ^/klant/gegevens/aanpassen, roles: ROLE_USER }
+        - { path: ^/klant/rijbewijs/aanpassen, roles: ROLE_USER }
+        - { path: ^/klant/account/aanpassen, roles: ROLE_USER }
+        - { path: ^/klant/bestellen, roles: ROLE_USER }
+        - { path: ^/klant/bestellinggeslaagd, roles: ROLE_USER }
+        - { path: ^/klant/bestellingen/overview, roles: ROLE_USER }
+        - { path: ^/klant/gegevens/account-uitschakelen, roles: ROLE_USER }
+        - { path: ^/klant/bestelling/verwijderen, roles: ROLE_USER }
 
         # Toegestane routes voor admin-gebruikers
         - { path: ^/admin/object/add, roles: ROLE_ADMIN }
         - { path: ^/admin/object/edit/, roles: ROLE_ADMIN }
+        - { path: ^/admin/object/delete, roles: ROLE_ADMIN }
         - { path: ^/admin/object/overview, roles: ROLE_ADMIN }
         - { path: ^/admin/option/add, roles: ROLE_ADMIN }
         - { path: ^/admin/option/edit/, roles: ROLE_ADMIN }
+        - { path: ^/admin/option/delete, roles: ROLE_ADMIN }
         - { path: ^/admin/option/overview, roles: ROLE_ADMIN }
-        - { path: ^/admin/user/edit/, roles: ROLE_ADMIN }
+        - { path: ^/admin/settings/addDiscount, roles: ROLE_ADMIN }
+        - { path: ^/admin/settings, roles: ROLE_ADMIN }
+        - { path: ^/admin/settings/editDiscount, roles: ROLE_ADMIN }
+        - { path: ^/admin/settings/deleteDiscount, roles: ROLE_ADMIN }
+        - { path: ^/admin/user/delete, roles: ROLE_ADMIN }
         - { path: ^/admin/user/overview, roles: ROLE_ADMIN }
+        - { path: ^/admin/orders/overview, roles: ROLE_ADMIN }
+        - { path: ^/admin/user/edit/, roles: ROLE_ADMIN }
+        - { path: ^/admin/user/id/disable, roles: ROLE_ADMIN }
+        - { path: ^/admin/user/id/enable, roles: ROLE_ADMIN }
+        - { path: ^/admin/user/overview, roles: ROLE_ADMIN }
+        - { path: ^/addtestdata, roles: ROLE_ADMIN}
