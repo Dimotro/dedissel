@@ -10,7 +10,7 @@
 ###< symfony/web-server-bundle ###
 
 ###> symfony/webpack-encore-pack ###
-/node_modules/
+/node_modules/rm
 ###< symfony/webpack-encore-pack ###
 
 \.idea/
@@ -18,3 +18,5 @@
 \.DS_Store
 
 \.env\.dist
+
+node_modules/
